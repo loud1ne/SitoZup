@@ -1,4 +1,4 @@
-/* style.css - Foglio di stile principale */
+/* style.css - Aggiornato */
 
 /* Importazione Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
@@ -6,9 +6,11 @@
 /* Regole Base */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #Fdfbf7; /* Bianco caldo */
-    color: #1c1917; /* Grigio scuro */
+    background-color: #Fdfbf7;
+    color: #1c1917;
     -webkit-font-smoothing: antialiased;
+    /* Importante per evitare scroll orizzontale durante le animazioni */
+    overflow-x: hidden; 
 }
 
 /* Tipografia */
@@ -21,21 +23,10 @@ h1, h2, h3, h4, .serif {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* Animazioni Custom */
-.reveal-element {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-element.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Hover sulle immagini */
+/* Hover sulle immagini (Mantenuto perché diverso da AOS) */
 .image-zoom {
     overflow: hidden;
+    display: block; /* Assicura comportamento a blocco */
 }
 .image-zoom img {
     transition: transform 0.7s ease;

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettaglio Progetto | Zuppardo Costruzioni</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased texture-bg">
@@ -13,14 +14,16 @@
         <a href="index.html" class="font-bold tracking-widest text-sm uppercase flex items-center gap-2 z-50 relative">
             <span class="w-2 h-2 bg-black rounded-full"></span> Zuppardo
         </a>
-        <div class="hidden md:flex gap-10 text-xs font-semibold tracking-wide uppercase">
+        <div class="hidden md:flex gap-10 text-xs font-semibold tracking-wide uppercase" data-aos="fade-down">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="progetti.html" class="nav-link">Progetti</a>
+            <a href="progetti.html" class="nav-link active">Progetti</a>
             <a href="servizi.html" class="nav-link">Servizi</a>
             <a href="contatti.html" class="nav-link">Contatti</a>
         </div>
-        <a href="progetti.html" class="hidden md:block px-6 py-2 border border-black text-xs font-bold uppercase hover:bg-black hover:text-white transition-colors">Torna ai Progetti</a>
-
+        <div data-aos="fade-down" data-aos-delay="200">
+             <a href="progetti.html" class="hidden md:block px-6 py-2 border border-black text-xs font-bold uppercase hover:bg-black hover:text-white transition-colors">Torna ai Progetti</a>
+        </div>
+        
         <button id="menu-btn" class="block md:hidden z-50 focus:outline-none">
             <div class="space-y-1.5 cursor-pointer">
                 <span class="block w-6 h-0.5 bg-black transition-transform duration-300"></span>
@@ -37,17 +40,18 @@
         </div>
     </nav>
 
-    <div class="h-[70vh] w-full relative bg-stone-800">
-        <img src="https://images.unsplash.com/photo-1600596542815-27bfef2f43ea?q=80&w=2674&auto=format&fit=crop" class="w-full h-full object-cover opacity-90" alt="Villa Detail">
+    <div class="h-[70vh] w-full relative bg-stone-800 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1600596542815-27bfef2f43ea?q=80&w=2674&auto=format&fit=crop" class="w-full h-full object-cover opacity-90" alt="Villa Detail" 
+             data-aos="zoom-out" data-aos-duration="2000">
         <div class="absolute inset-0 bg-black/30"></div>
-        <div class="absolute bottom-10 left-6 md:left-20 text-white z-10">
+        <div class="absolute bottom-10 left-6 md:left-20 text-white z-10" data-aos="fade-up" data-aos-delay="500">
             <h1 class="text-5xl md:text-7xl serif drop-shadow-lg">Villa Orizzonte</h1>
             <p class="text-sm uppercase tracking-widest mt-2 drop-shadow-md">Siracusa, Sicilia</p>
         </div>
     </div>
 
     <section class="py-24 px-6 md:px-20 grid md:grid-cols-12 gap-12 bg-[#Fdfbf7]">
-        <div class="md:col-span-4 space-y-8 border-t border-stone-300 pt-6">
+        <div class="md:col-span-4 space-y-8 border-t border-stone-300 pt-6" data-aos="fade-up">
             <div>
                 <span class="text-xs uppercase text-stone-400 tracking-widest block mb-1">Cliente</span>
                 <span class="text-lg font-medium">Privato</span>
@@ -66,7 +70,7 @@
             </div>
         </div>
 
-        <div class="md:col-span-8">
+        <div class="md:col-span-8" data-aos="fade-up" data-aos-delay="200">
             <h2 class="text-3xl serif mb-6">La sfida del bianco e della luce.</h2>
             <div class="text-stone-600 font-light text-lg leading-relaxed space-y-6">
                 <p>
@@ -80,18 +84,18 @@
     </section>
 
     <section class="px-6 md:px-20 pb-24 bg-[#Fdfbf7]">
-        <h3 class="text-2xl serif mb-8">Dettagli Costruttivi</h3>
+        <h3 class="text-2xl serif mb-8" data-aos="fade-up">Dettagli Costruttivi</h3>
         
         <div class="grid md:grid-cols-2 gap-4">
-            <div class="aspect-[3/4] bg-stone-200 overflow-hidden relative group">
+            <div class="aspect-[3/4] bg-stone-200 overflow-hidden relative group" data-aos="fade-up" data-aos-delay="0">
                 <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=2670&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Dettaglio 1">
             </div>
 
             <div class="flex flex-col gap-4 h-full">
-                <div class="aspect-[3/2] bg-stone-200 overflow-hidden relative group w-full">
+                <div class="aspect-[3/2] bg-stone-200 overflow-hidden relative group w-full" data-aos="fade-up" data-aos-delay="100">
                     <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2670&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Dettaglio 2">
                 </div>
-                <div class="aspect-[3/2] bg-stone-200 overflow-hidden relative group w-full">
+                <div class="aspect-[3/2] bg-stone-200 overflow-hidden relative group w-full" data-aos="fade-up" data-aos-delay="200">
                     <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2670&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Dettaglio 3">
                 </div>
             </div>
@@ -99,7 +103,7 @@
     </section>
 
     <div class="border-t border-stone-300 bg-[#Fdfbf7]">
-        <a href="progetti.html" class="block py-20 text-center hover:bg-stone-100 transition-colors cursor-pointer">
+        <a href="progetti.html" class="block py-20 text-center hover:bg-stone-100 transition-colors cursor-pointer" data-aos="zoom-in">
             <span class="text-xs uppercase text-stone-400 tracking-widest mb-2 block">Torna alla galleria</span>
             <span class="text-4xl serif">Vedi altri progetti →</span>
         </a>
@@ -134,7 +138,10 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        AOS.init({ once: true, duration: 800 });
+
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
         const spans = btn.querySelectorAll('span');
