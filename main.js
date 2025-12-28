@@ -69,15 +69,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (showTransparentNav) {
                     // --- STATO INIZIALE HOME ---
                     // Effetto "Frosted Glass" (Vetro Smerigliato)
-                    // Bianco al 40% + Blur Intenso: Schiarisce lo sfondo per leggere il logo nero, ma rimane trasparente
-                    // MODIFICA: Ridotto blur da backdrop-blur-lg a backdrop-blur-md
-                    nav.classList.add('bg-white/20', 'backdrop-blur-md', 'shadow-sm', 'text-black');
-                    nav.classList.remove('bg-white/95', 'bg-white/70', 'backdrop-blur-lg');
+                    // Aumentato bg-white a 70% per garantire leggibilità del logo sulla foto
+                    // Mantenuto backdrop-blur-md per un effetto morbido ma non eccessivo
+                    nav.classList.add('bg-white/70', 'backdrop-blur-md', 'shadow-sm', 'text-black');
+                    nav.classList.remove('bg-white/95', 'bg-white/40', 'backdrop-blur-lg');
                 } else {
                     // --- STATO SCROLLATO / ALTRE PAGINE ---
                     // Sfondo Bianco Quasi Solido
                     nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'text-black');
-                    nav.classList.remove('bg-white/40', 'backdrop-blur-lg');
+                    nav.classList.remove('bg-white/40', 'bg-white/70', 'backdrop-blur-lg');
                 }
             };
 
