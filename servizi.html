@@ -4,46 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servizi | Zuppardo Costruzioni</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏗️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="vendor/aos/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="texture-bg">
 
-    <nav class="fixed top-0 w-full p-6 md:px-12 flex justify-between items-center z-50 bg-white/90 backdrop-blur-md shadow-sm text-black" id="main-nav">
-        <a href="index.html" class="font-bold tracking-widest text-sm uppercase flex items-center gap-2 z-50 relative">
-            <span class="w-2 h-2 bg-black rounded-full"></span> Zuppardo
-        </a>
-        <div class="hidden md:flex gap-10 text-xs font-semibold tracking-wide uppercase" data-aos="fade-down" data-aos-duration="800">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="progetti.html" class="nav-link">Progetti</a>
-            <a href="servizi.html" class="nav-link active">Servizi</a>
-            <a href="contatti.html" class="nav-link">Contatti</a>
-        </div>
-        <div data-aos="fade-down" data-aos-delay="200">
-            <a href="contatti.html" class="hidden md:block px-6 py-2 border border-black text-xs font-bold uppercase hover:bg-black hover:text-white transition-colors">Contattaci</a>
-        </div>
-
-        <button id="menu-btn" class="block md:hidden z-50 focus:outline-none">
-            <div class="space-y-1.5 cursor-pointer">
-                <span class="block w-6 h-0.5 bg-black transition-transform duration-300"></span>
-                <span class="block w-6 h-0.5 bg-black transition-opacity duration-300"></span>
-                <span class="block w-6 h-0.5 bg-black transition-transform duration-300"></span>
-            </div>
-        </button>
-
-        <div id="mobile-menu" class="fixed inset-0 bg-[#Fdfbf7] flex flex-col items-center justify-center space-y-8 text-3xl serif translate-x-full transition-transform duration-500 ease-in-out md:hidden h-screen w-screen z-40">
-            <a href="index.html" class="hover:italic">Home</a>
-            <a href="progetti.html" class="hover:italic">Progetti</a>
-            <a href="servizi.html" class="hover:italic">Servizi</a>
-            <a href="contatti.html" class="hover:italic">Contatti</a>
-        </div>
-    </nav>
+    <div id="main-nav-placeholder"></div>
 
     <header class="pt-40 pb-20 px-6 md:px-20">
         <div data-aos="fade-up" data-aos-duration="1000">
             <span class="text-xs font-bold uppercase text-stone-400">Competenze</span>
-            <h1 class="text-6xl serif mt-4 mb-8">Maestria a 360°</h1>
+            <h1 class="text-6xl serif mt-4 mb-8">Maestria a 360°.</h1>
             <p class="max-w-2xl text-lg text-stone-600 font-light">
                 Dalla posa della prima pietra alle finiture di pregio. Gestiamo ogni fase del cantiere con personale interno e tecnici qualificati.
             </p>
@@ -85,7 +58,7 @@
                 </div>
                 <div class="md:col-span-8">
                     <p class="text-stone-600 font-light text-lg mb-6">
-                        Un unico interlocutore per tutto il processo. Ci occupiamo noi di permessi, demolizioni, impianti, pavimentazioni e infissi. 
+                        Un unico interlocutore per tutto il processo. Ci occupiamo noi di permessi, demolizioni, impianti, pavimentazioni e infissi.
                     </p>
                 </div>
             </div>
@@ -94,63 +67,14 @@
 
     <section class="bg-stone-900 text-white py-20 px-6 md:px-20 text-center" data-aos="zoom-in" data-aos-duration="800">
         <h2 class="text-4xl serif mb-6">Hai un progetto in mente?</h2>
-        <a href="contatti.html" class="inline-block border border-white px-8 py-3 hover:bg-white hover:text-black transition-colors uppercase text-sm font-bold tracking-widest">
+        <a href="contatti.html" class="inline-block border border-white px-8 py-3 hover:bg-white hover:text-black transition-colors uppercase text-sm font-bold tracking-widest hover-lift">
             Parla con un tecnico
         </a>
     </section>
 
-    <footer class="bg-stone-900 text-white pt-20 pb-10 px-6 md:px-20 border-t border-stone-800">
-        <div class="grid md:grid-cols-4 gap-12 mb-16">
-            <div class="col-span-1 md:col-span-2">
-                <h4 class="font-bold tracking-widest text-sm uppercase mb-6 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-white rounded-full"></span> Zuppardo
-                </h4>
-                <p class="text-stone-400 font-light max-w-sm">Costruiamo spazi che sfidano il tempo.</p>
-            </div>
-            <div>
-                <h5 class="serif text-xl mb-6">Navigazione</h5>
-                <ul class="space-y-4 text-stone-400 text-sm">
-                    <li><a href="progetti.html" class="hover:text-white">Opere Realizzate</a></li>
-                    <li><a href="servizi.html" class="hover:text-white">I Nostri Servizi</a></li>
-                    <li><a href="contatti.html" class="hover:text-white">Richiedi Preventivo</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="serif text-xl mb-6">Contatti</h5>
-                <ul class="space-y-4 text-stone-400 text-sm">
-                    <li>Via Roma 10, Palermo</li>
-                    <li>info@costruzionizuppardo.it</li>
-                </ul>
-            </div>
-        </div>
-        <div class="border-t border-stone-800 pt-8 flex justify-between items-center text-xs text-stone-500 uppercase tracking-widest">
-            <p>© 2024 Zuppardo Costruzioni</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ once: true, duration: 800 });
-
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const spans = btn.querySelectorAll('span');
-        let isOpen = false;
-
-        btn.addEventListener('click', () => {
-            isOpen = !isOpen;
-            if(isOpen) {
-                menu.classList.remove('translate-x-full');
-                spans[0].classList.add('rotate-45', 'translate-y-2');
-                spans[1].classList.add('opacity-0');
-                spans[2].classList.add('-rotate-45', '-translate-y-2');
-            } else {
-                menu.classList.add('translate-x-full');
-                spans[0].classList.remove('rotate-45', 'translate-y-2');
-                spans[1].classList.remove('opacity-0');
-                spans[2].classList.remove('-rotate-45', '-translate-y-2');
-            }
-        });
-    </script>
+    <script src="vendor/aos/aos.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

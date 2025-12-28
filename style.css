@@ -1,21 +1,65 @@
-/* style.css - Aggiornato */
+/* style.css - Migliorato con Variabili CSS e Finiture Premium */
 
 /* Importazione Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
+/* Definizione delle Variabili CSS */
+:root {
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+
+    --color-background: #Fdfbf7;
+    --color-text-main: #1c1917;
+    --color-text-muted: #57534e;
+    --color-accent: #a855f7;
+
+    /* Variabile per l'animazione del testo */
+    --reveal-color: currentColor;
+
+    --transition-fast: 0.3s ease;
+    --transition-slow: 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --shadow-lift: 0 10px 30px -10px rgba(0,0,0,0.15);
+}
+
 /* Regole Base */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #Fdfbf7;
-    color: #1c1917;
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-text-main);
     -webkit-font-smoothing: antialiased;
-    /* Importante per evitare scroll orizzontale durante le animazioni */
-    overflow-x: hidden; 
+    overflow-x: hidden;
+}
+
+/* --- FINITURE PREMIUM --- */
+
+/* 1. Selezione del testo personalizzata */
+::selection {
+    background-color: #1c1917; /* Nero morbido */
+    color: #ffffff;
+}
+
+/* 2. Scrollbar Personalizzata (Webkit) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+    background-color: #d6d3d1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a29e;
 }
 
 /* Tipografia */
 h1, h2, h3, h4, .serif {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
 }
 
 /* Texture di Sfondo */
@@ -23,42 +67,105 @@ h1, h2, h3, h4, .serif {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* Hover sulle immagini (Mantenuto perché diverso da AOS) */
-.image-zoom {
-    overflow: hidden;
-    display: block; /* Assicura comportamento a blocco */
+/* --- MIGLIORAMENTI ESTETICI --- */
+
+/* Transizioni Generali */
+a, button {
+    transition: all var(--transition-fast);
 }
-.image-zoom img {
-    transition: transform 0.7s ease;
+
+/* Effetto "sollevamento" */
+.hover-lift {
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
-.image-zoom:hover img {
+.hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+}
+
+/* Effetto Zoom per Immagini */
+.image-zoom .zoom-img {
+    transition: transform var(--transition-slow);
+}
+.image-zoom:hover .zoom-img {
     transform: scale(1.05);
 }
 
-/* Utility Navigazione */
+/* Stile Link di Navigazione */
 .nav-link {
     position: relative;
+    padding-bottom: 4px;
 }
 .nav-link::after {
     content: '';
     position: absolute;
     width: 0;
     height: 1px;
-    bottom: -2px;
-    left: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: currentColor;
-    transition: width 0.3s ease;
+    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     width: 100%;
 }
-.nav-link.active {
-    border-bottom: 1px solid currentColor;
+
+/* Overlay Progetti (Nuovo) */
+.project-card {
+    position: relative;
+    overflow: hidden;
+}
+.project-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.project-card:hover .project-overlay {
+    opacity: 1;
 }
 
 /* Stato Bottoni */
 button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
-    background-color: #57534e;
+    background-color: var(--color-text-muted);
+}
+
+/* --- ANIMAZIONE TESTO "VUOTO" CHE SI RIEMPIE --- */
+.reveal-text-init {
+    color: transparent;
+    -webkit-text-stroke: 0.02em var(--reveal-color, currentColor);
+}
+
+.reveal-text-anim {
+    animation: fillTextAnim 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes fillTextAnim {
+    0% {
+        color: transparent;
+        -webkit-text-stroke-color: var(--reveal-color, currentColor);
+    }
+    100% {
+        color: var(--reveal-color, currentColor);
+        -webkit-text-stroke-color: transparent;
+    }
+}
+
+/* Fix per bug schermata bianca iniziale */
+/* Assicura che il contenuto principale sia visibile anche se AOS non è ancora partito */
+main {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+/* Assicura che l'header abbia un'altezza minima e sia visibile */
+header {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
