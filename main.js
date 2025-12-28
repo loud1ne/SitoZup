@@ -1,3 +1,4 @@
+/* global AOS */
 document.addEventListener("DOMContentLoaded", function() {
 
     const loadHTML = (elementId, filePath) => {
@@ -75,23 +76,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         if (isMenuOpen) {
                             // Apri menu
+                            mobileMenu.style.display = 'flex'; // Ripristina display flex
+                            mobileMenu.classList.remove('hidden'); // Rimuovi classe hidden di Tailwind
+                            
+                            // Forza un reflow per assicurare che la transizione avvenga
+                            void mobileMenu.offsetWidth;
+                            
                             mobileMenu.style.visibility = 'visible';
                             mobileMenu.classList.remove('invisible');
-                            // Piccolo delay per permettere al browser di renderizzare 'invisible' rimosso prima di animare
+                            
                             requestAnimationFrame(() => {
                                 mobileMenu.style.transform = 'translateX(0)';
                                 mobileMenu.classList.remove('translate-x-full');
                             });
                         } else {
-                            // Chiudi menu
                             mobileMenu.style.transform = 'translateX(100%)';
                             mobileMenu.classList.add('translate-x-full');
-                            // Aspetta la fine della transizione per nascondere (opzionale, ma 'invisible' aiuta a prevenire flash)
                             setTimeout(() => {
                                 if (!isMenuOpen) {
                                     mobileMenu.style.visibility = 'hidden';
                                     mobileMenu.classList.add('invisible');
-                                    // Rimuovi le classi di transizione dopo la chiusura per evitare flash al resize/reload
+                                    mobileMenu.style.display = 'none'; // Nascondi completamente
+                                    mobileMenu.classList.add('hidden'); // Aggiungi classe hidden di Tailwind
+                                    // Rimuovi le classi di transizione dopo la chiusura
                                     mobileMenu.classList.remove('transition-transform', 'duration-500', 'ease-in-out');
                                 }
                             }, 500); // 500ms corrisponde a duration-500
@@ -151,13 +158,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function setupContactForm() {
         const contactForm = document.getElementById("contact-form");
-        if (!contactForm) return;
         // Logica form...
     }
     
     function updateCopyrightYear() {
         const yearSpan = document.getElementById("copyright-year");
-        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
     }
 
     function setupTextRevealAnimation() {

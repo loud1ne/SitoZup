@@ -169,3 +169,19 @@ header {
     flex-direction: column;
     justify-content: center;
 }
+
+/* --- RESPONSIVE HELPERS (Anti-FOUC) --- */
+/* Queste classi assicurano che gli elementi siano nascosti correttamente
+   anche prima che Tailwind CSS venga caricato completamente */
+
+@media (max-width: 767px) {
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-only {
+        display: none !important;
+    }
+}
