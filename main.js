@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    /**
-     * Carica un file HTML e restituisce una Promise.
-     */
     const loadHTML = (elementId, filePath) => {
         return fetch(filePath)
             .then(response => {
@@ -16,15 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error(`Errore nel caricamento di ${filePath}:`, error));
     };
 
-    /**
-     * Funzione principale che avvia tutte le logiche del sito.
-     */
     function initializeSite() {
         setupNav();
         setupContactForm();
         updateCopyrightYear();
-
-        // Inizializza AOS dopo che il contenuto è stato caricato
         setTimeout(() => {
             AOS.init({
                 once: true,
@@ -32,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 easing: 'ease-out-cubic',
                 offset: 100,
             });
-            // Forza un refresh di AOS per ricalcolare le posizioni
             AOS.refresh();
         }, 100);
 
@@ -52,30 +43,19 @@ document.addEventListener("DOMContentLoaded", function() {
             const isHomePage = path.endsWith('index.html') || path === '/' || path.endsWith('/SitoZup/') || path.endsWith('/SitoZup');
             
             let isMenuOpen = false;
-
-            // Funzione per aggiornare lo stato della navbar
             const updateNavState = () => {
                 const isScrolled = window.scrollY > 50;
                 const showTransparentNav = isHomePage && !isScrolled && !isMenuOpen;
-
-                // Rimuoviamo classi che potrebbero essere rimaste da stati precedenti
                 nav.classList.remove('bg-black/30', 'text-white', 'bg-gradient-to-b', 'from-black/40', 'to-transparent');
-                
-                // Assicuriamoci che il logo sia sempre "normale" (Nero/Giallo)
+
                 if (logo) {
                     logo.classList.remove('invert', 'brightness-0');
                 }
 
                 if (showTransparentNav) {
-                    // --- STATO INIZIALE HOME ---
-                    // Effetto "Frosted Glass" (Vetro Smerigliato)
-                    // Bianco al 40% + Blur Intenso: Schiarisce lo sfondo per leggere il logo nero, ma rimane trasparente
-                    // MODIFICA: Ridotto blur da backdrop-blur-lg a backdrop-blur-md
-                    nav.classList.add('bg-white/20', 'backdrop-blur-md', 'shadow-sm', 'text-black');
-                    nav.classList.remove('bg-white/95', 'bg-white/70', 'backdrop-blur-lg');
+                    nav.classList.add('bg-white/70', 'backdrop-blur-md', 'shadow-sm', 'text-black');
+                    nav.classList.remove('bg-white/95', 'bg-white/40', 'backdrop-blur-lg');
                 } else {
-                    // --- STATO SCROLLATO / ALTRE PAGINE ---
-                    // Sfondo Bianco Quasi Solido
                     nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'text-black');
                     nav.classList.remove('bg-white/40', 'backdrop-blur-lg');
                 }
@@ -87,7 +67,36 @@ document.addEventListener("DOMContentLoaded", function() {
             if (menuBtn) {
                 menuBtn.addEventListener('click', () => {
                     isMenuOpen = !isMenuOpen;
-                    if (mobileMenu) mobileMenu.classList.toggle('translate-x-full', !isMenuOpen);
+                    
+                    // Gestione visibilità menu mobile
+                    if (mobileMenu) {
+                        // Aggiungi le classi di transizione solo quando si interagisce con il menu
+                        mobileMenu.classList.add('transition-transform', 'duration-500', 'ease-in-out');
+
+                        if (isMenuOpen) {
+                            // Apri menu
+                            mobileMenu.style.visibility = 'visible';
+                            mobileMenu.classList.remove('invisible');
+                            // Piccolo delay per permettere al browser di renderizzare 'invisible' rimosso prima di animare
+                            requestAnimationFrame(() => {
+                                mobileMenu.style.transform = 'translateX(0)';
+                                mobileMenu.classList.remove('translate-x-full');
+                            });
+                        } else {
+                            // Chiudi menu
+                            mobileMenu.style.transform = 'translateX(100%)';
+                            mobileMenu.classList.add('translate-x-full');
+                            // Aspetta la fine della transizione per nascondere (opzionale, ma 'invisible' aiuta a prevenire flash)
+                            setTimeout(() => {
+                                if (!isMenuOpen) {
+                                    mobileMenu.style.visibility = 'hidden';
+                                    mobileMenu.classList.add('invisible');
+                                    // Rimuovi le classi di transizione dopo la chiusura per evitare flash al resize/reload
+                                    mobileMenu.classList.remove('transition-transform', 'duration-500', 'ease-in-out');
+                                }
+                            }, 500); // 500ms corrisponde a duration-500
+                        }
+                    }
                     
                     if (menuSpans.length === 3) {
                         const [s1, s2, s3] = menuSpans;

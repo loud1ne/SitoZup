@@ -1,7 +1,7 @@
 <nav class="fixed top-0 w-full p-6 md:px-12 flex justify-between items-center z-50 transition-all duration-300" id="main-nav">
     <a href="../index.html" class="z-50 relative block">
         <!-- Logo SVG -->
-        <img id="nav-logo" src="../assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-16 w-auto object-contain transition-all duration-300">
+        <img id="nav-logo" src="../assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-12 md:h-16 w-auto object-contain transition-all duration-300">
     </a>
 
     <div class="hidden md:flex gap-10 text-xs font-semibold tracking-wide uppercase">
@@ -14,7 +14,7 @@
          <a href="../contatti.html" class="hidden md:block px-6 py-2 border border-current text-xs font-bold uppercase hover-lift nav-link">Contattaci</a>
     </div>
 
-    <button id="menu-btn" class="block md:hidden z-50 focus:outline-none">
+    <button id="menu-btn" class="block md:hidden z-50 focus:outline-none p-2">
         <div class="space-y-1.5 cursor-pointer">
             <span class="block w-6 h-0.5 bg-current transition-transform duration-300"></span>
             <span class="block w-6 h-0.5 bg-current transition-opacity duration-300"></span>
@@ -22,7 +22,8 @@
         </div>
     </button>
 
-    <div id="mobile-menu" class="fixed inset-0 bg-[var(--color-background)] text-black flex flex-col items-center justify-center space-y-8 text-3xl serif translate-x-full transition-transform duration-500 ease-in-out md:hidden h-screen w-screen z-40">
+    <!-- Mobile Menu: Transition classes removed to prevent FOUC/slide-out on load. Added via JS. -->
+    <div id="mobile-menu" style="visibility: hidden; transform: translateX(100%);" class="fixed inset-0 bg-[var(--color-background)] text-black flex flex-col items-center justify-center space-y-8 text-3xl serif translate-x-full invisible md:hidden h-screen w-screen z-40">
         <a href="../index.html" class="hover:italic">Home</a>
         <a href="../progetti.html" class="hover:italic">Progetti</a>
         <a href="../servizi.html" class="hover:italic">Servizi</a>
