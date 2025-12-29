@@ -3,22 +3,19 @@
 /* Importazione Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
-/* Definizione delle Variabili CSS */
+/* Variabili CSS */
 :root {
     --font-sans: 'Inter', sans-serif;
     --font-serif: 'Playfair Display', serif;
-
     --color-background: #Fdfbf7;
     --color-text-main: #1c1917;
     --color-text-muted: #57534e;
     --color-accent: #a855f7;
-
     --transition-fast: 0.3s ease;
-    --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Ease Out Expo */
-    --shadow-lift: 0 20px 40px -15px rgba(0,0,0,0.15);
+    --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Regole Base */
+/* Base */
 html {
     scroll-behavior: smooth;
 }
@@ -28,46 +25,42 @@ body {
     background-color: var(--color-background);
     color: var(--color-text-main);
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Previene scroll orizzontale indesiderato */
+    width: 100%;
 }
 
-/* --- FINITURE PREMIUM --- */
-
+/* Finiture */
 ::selection {
     background-color: #1c1917;
     color: #ffffff;
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 ::-webkit-scrollbar-track {
     background: var(--color-background);
 }
 ::-webkit-scrollbar-thumb {
     background-color: #a8a29e;
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
-/* Tipografia */
 h1, h2, h3, h4, .serif {
     font-family: var(--font-serif);
 }
 
-/* Texture di Sfondo */
 .texture-bg {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* --- COMPONENTI VISIVI --- */
-
-/* Magnetic Button Effect */
+/* Componenti */
 .magnetic-btn {
     display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: transform;
 }
 
-/* Immagini e Parallax */
 .parallax-container {
     overflow: hidden;
     position: relative;
@@ -75,25 +68,26 @@ h1, h2, h3, h4, .serif {
 
 .parallax-img {
     will-change: transform;
-    transform: scale(1.1); /* Necessario per il movimento parallax senza bordi bianchi */
-    transition: transform 0.1s linear; /* Movimento fluido via JS */
+    transform: scale(1.1);
+    /* Removed transition to prevent parallax jitter/lag */
 }
 
-/* Project Card Avanzata */
+/* Project Card */
 .project-card {
     position: relative;
     overflow: hidden;
     display: block;
+    transform: translateZ(0); /* Hardware acceleration fix */
 }
 
 .project-overlay {
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
-    opacity: 0.6;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+    opacity: 0.5;
     transition: opacity 0.5s ease;
 }
 
 .project-card:hover .project-overlay {
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .project-info {
@@ -107,7 +101,6 @@ h1, h2, h3, h4, .serif {
     opacity: 1;
 }
 
-/* Linea decorativa animata */
 .line-reveal {
     position: relative;
     overflow: hidden;
@@ -127,35 +120,31 @@ h1, h2, h3, h4, .serif {
     transform: translateX(0);
 }
 
-/* --- ANIMAZIONI --- */
-
-/* Reveal Text Animation - FIX BUG INVISIBILITÀ */
+/* Animazioni Testo - FIX */
 .reveal-text-init {
-    /* Rimosso color: transparent per evitare bug */
-    opacity: 0; /* Fallback sicuro */
-    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1), clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform, clip-path, opacity;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
 }
 
 .reveal-text-anim {
     opacity: 1;
-    clip-path: polygon(0 -20%, 100% -20%, 100% 120%, 0% 120%); /* Margini estesi per evitare tagli */
     transform: translateY(0);
 }
 
-/* Scroll Down Indicator */
+/* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    opacity: 0.7;
+    opacity: 0.8;
     animation: bounce 2s infinite;
+    pointer-events: none;
 }
 
 @keyframes bounce {
@@ -164,12 +153,25 @@ h1, h2, h3, h4, .serif {
     60% {transform: translateX(-50%) translateY(-5px);}
 }
 
-/* Utility Classes */
-.text-balance {
-    text-wrap: balance;
+/* Utility */
+.hover-lift {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+.hover-lift:hover {
+    transform: translateY(-5px);
 }
 
-/* Responsive Helpers */
+.image-zoom {
+    overflow: hidden;
+}
+.zoom-img {
+    transition: transform 0.7s ease;
+}
+.image-zoom:hover .zoom-img {
+    transform: scale(1.05);
+}
+
 @media (max-width: 767px) {
     .desktop-only { display: none !important; }
 }
