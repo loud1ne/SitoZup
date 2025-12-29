@@ -72,6 +72,10 @@ h1, h2, h3, h4, .serif {
     /* Removed transition to prevent parallax jitter/lag */
 }
 
+.parallax-img.parallax-top {
+    transform: scale(1.2);
+}
+
 /* Project Card */
 .project-card {
     position: relative;
