@@ -1,4 +1,4 @@
-/* style.css - Migliorato con Variabili CSS e Finiture Premium */
+/* style.css - Premium Architecture Edition */
 
 /* Importazione Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
@@ -13,12 +13,9 @@
     --color-text-muted: #57534e;
     --color-accent: #a855f7;
 
-    /* Variabile per l'animazione del testo */
-    --reveal-color: currentColor;
-
     --transition-fast: 0.3s ease;
-    --transition-slow: 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --shadow-lift: 0 10px 30px -10px rgba(0,0,0,0.15);
+    --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Ease Out Expo */
+    --shadow-lift: 0 20px 40px -15px rgba(0,0,0,0.15);
 }
 
 /* Regole Base */
@@ -36,25 +33,20 @@ body {
 
 /* --- FINITURE PREMIUM --- */
 
-/* 1. Selezione del testo personalizzata */
 ::selection {
-    background-color: #1c1917; /* Nero morbido */
+    background-color: #1c1917;
     color: #ffffff;
 }
 
-/* 2. Scrollbar Personalizzata (Webkit) */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 ::-webkit-scrollbar-track {
     background: var(--color-background);
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #d6d3d1;
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
     background-color: #a8a29e;
+    border-radius: 3px;
 }
 
 /* Tipografia */
@@ -67,121 +59,120 @@ h1, h2, h3, h4, .serif {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* --- MIGLIORAMENTI ESTETICI --- */
+/* --- COMPONENTI VISIVI --- */
 
-/* Transizioni Generali */
-a, button {
-    transition: all var(--transition-fast);
-}
-
-/* Effetto "sollevamento" */
-.hover-lift {
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-.hover-lift:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lift);
+/* Magnetic Button Effect */
+.magnetic-btn {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Effetto Zoom per Immagini */
-.image-zoom .zoom-img {
-    transition: transform var(--transition-slow);
-}
-.image-zoom:hover .zoom-img {
-    transform: scale(1.05);
-}
-
-/* Stile Link di Navigazione */
-.nav-link {
+/* Immagini e Parallax */
+.parallax-container {
+    overflow: hidden;
     position: relative;
-    padding-bottom: 4px;
-}
-.nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: currentColor;
-    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
 }
 
-/* Overlay Progetti (Nuovo) */
+.parallax-img {
+    will-change: transform;
+    transform: scale(1.1); /* Necessario per il movimento parallax senza bordi bianchi */
+    transition: transform 0.1s linear; /* Movimento fluido via JS */
+}
+
+/* Project Card Avanzata */
 .project-card {
     position: relative;
     overflow: hidden;
+    display: block;
 }
+
 .project-overlay {
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    opacity: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+    opacity: 0.6;
     transition: opacity 0.5s ease;
 }
+
 .project-card:hover .project-overlay {
+    opacity: 0.8;
+}
+
+.project-info {
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover .project-info {
+    transform: translateY(0);
     opacity: 1;
 }
 
-/* Stato Bottoni */
-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    background-color: var(--color-text-muted);
+/* Linea decorativa animata */
+.line-reveal {
+    position: relative;
+    overflow: hidden;
+}
+.line-reveal::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: translateX(-101%);
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.line-reveal.aos-animate::after {
+    transform: translateX(0);
 }
 
-/* --- ANIMAZIONE TESTO "VUOTO" CHE SI RIEMPIE --- */
+/* --- ANIMAZIONI --- */
+
+/* Reveal Text Animation - FIX BUG INVISIBILITÀ */
 .reveal-text-init {
-    color: transparent;
-    -webkit-text-stroke: 0.02em var(--reveal-color, currentColor);
+    /* Rimosso color: transparent per evitare bug */
+    opacity: 0; /* Fallback sicuro */
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1), clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, clip-path, opacity;
 }
 
 .reveal-text-anim {
-    animation: fillTextAnim 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-@keyframes fillTextAnim {
-    0% {
-        color: transparent;
-        -webkit-text-stroke-color: var(--reveal-color, currentColor);
-    }
-    100% {
-        color: var(--reveal-color, currentColor);
-        -webkit-text-stroke-color: transparent;
-    }
-}
-
-/* Fix per bug schermata bianca iniziale */
-/* Assicura che il contenuto principale sia visibile anche se AOS non è ancora partito */
-main {
     opacity: 1;
-    transition: opacity 0.5s ease-in;
+    clip-path: polygon(0 -20%, 100% -20%, 100% 120%, 0% 120%); /* Margini estesi per evitare tagli */
+    transform: translateY(0);
 }
 
-/* Assicura che l'header abbia un'altezza minima e sia visibile */
-header {
-    min-height: 100vh;
-    width: 100%;
+/* Scroll Down Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    animation: bounce 2s infinite;
 }
 
-/* --- RESPONSIVE HELPERS (Anti-FOUC) --- */
-/* Queste classi assicurano che gli elementi siano nascosti correttamente
-   anche prima che Tailwind CSS venga caricato completamente */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+    40% {transform: translateX(-50%) translateY(-10px);}
+    60% {transform: translateX(-50%) translateY(-5px);}
+}
 
+/* Utility Classes */
+.text-balance {
+    text-wrap: balance;
+}
+
+/* Responsive Helpers */
 @media (max-width: 767px) {
-    .desktop-only {
-        display: none !important;
-    }
+    .desktop-only { display: none !important; }
 }
-
 @media (min-width: 768px) {
-    .mobile-only {
-        display: none !important;
-    }
+    .mobile-only { display: none !important; }
 }

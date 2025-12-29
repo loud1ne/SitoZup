@@ -10,6 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="vendor/aos/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Preload immagine hero per evitare layout shift -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop">
 </head>
 <body class="texture-bg overflow-x-hidden">
 
@@ -17,32 +20,59 @@
 
     <main>
         <header class="h-screen relative flex flex-col justify-center px-6 md:px-20 overflow-hidden">
-            <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 z-0 bg-stone-900"> <!-- Background placeholder color -->
+                <div class="absolute inset-0 bg-black/20 z-10"></div> <!-- Overlay leggero -->
                 <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop"
-                     class="w-full h-full object-cover brightness-75"
-                     data-aos="zoom-out" data-aos-duration="2000"
-                     alt="Interni di una casa moderna e lussuosa"
-                     loading="lazy">
+                     class="w-full h-full object-cover parallax-img opacity-0 transition-opacity duration-1000"
+                     onload="this.classList.remove('opacity-0')"
+                     data-speed="0.5"
+                     alt="Interni di una casa moderna e lussuosa">
             </div>
-            <div class="relative z-10 max-w-5xl mt-20 text-white">
-                <p class="tracking-[0.2em] uppercase mb-4 text-sm" data-aos="fade-right" data-aos-delay="500">Dal 1985</p>
 
-                <h1 class="text-6xl md:text-9xl leading-none mb-8">
-                    <span class="block" data-aos="fade-up" data-aos-delay="600">Costruire</span>
-                    <span class="block italic font-light opacity-90" data-aos="fade-up" data-aos-delay="800">l'Eterno.</span>
+            <div class="relative z-20 max-w-7xl mx-auto w-full text-white mt-20">
+                <div class="overflow-hidden mb-6">
+                    <p class="tracking-[0.3em] uppercase text-sm font-medium reveal-text" data-delay="500">Est. 1985 • Sicilia</p>
+                </div>
+
+                <h1 class="text-7xl md:text-[10rem] leading-[0.9] mb-12 mix-blend-overlay opacity-90">
+                    <span class="block reveal-text" data-delay="600">Costruire</span>
+                    <span class="block italic font-light reveal-text" data-delay="800">l'Eterno.</span>
                 </h1>
 
-                <div data-aos="fade-up" data-aos-delay="1000">
-                    <a href="progetti.html" class="inline-block mt-8 bg-white text-black px-8 py-4 text-sm font-bold uppercase tracking-widest hover-lift">Esplora i Lavori</a>
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-8" data-aos="fade-up" data-aos-delay="1000">
+                    <a href="progetti.html" class="magnetic-btn bg-white text-black px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-stone-100 transition-colors">
+                        Esplora i Lavori
+                    </a>
+                    <p class="max-w-xs text-sm font-light opacity-80 leading-relaxed hidden md:block">
+                        Uniamo l'artigianato tradizionale con la visione contemporanea per creare spazi che sfidano il tempo.
+                    </p>
                 </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator text-white z-20">
+                <span class="text-[10px] uppercase tracking-widest mb-2">Scroll</span>
+                <div class="w-px h-12 bg-gradient-to-b from-white to-transparent"></div>
             </div>
         </header>
 
-        <section class="py-24 px-6 md:px-20" role="region" aria-label="Filosofia Aziendale">
-            <div data-aos="fade-up">
-                <h2 class="text-4xl serif mb-6">L'Arte di Costruire.</h2>
-                <p class="text-xl font-light text-stone-600 max-w-2xl">Non costruiamo solo muri. Progettiamo spazi abitativi pensati per durare generazioni. Dal progetto alla chiave, senza sorprese.</p>
-                <a href="servizi.html" class="inline-block mt-8 text-xs font-bold uppercase underline underline-offset-4 hover:text-stone-400">Scopri cosa facciamo</a>
+        <section class="py-32 px-6 md:px-20 max-w-screen-2xl mx-auto" role="region" aria-label="Filosofia Aziendale">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div data-aos="fade-right">
+                    <span class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-4 block">La Nostra Filosofia</span>
+                    <h2 class="text-5xl md:text-6xl serif mb-8 leading-tight">L'Arte di <br>Costruire.</h2>
+                    <div class="h-px w-20 bg-black mb-8"></div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <p class="text-xl md:text-2xl font-light text-stone-600 leading-relaxed mb-8 text-balance">
+                        Non costruiamo solo muri. Progettiamo spazi abitativi pensati per durare generazioni. Dal progetto alla chiave, senza sorprese.
+                    </p>
+                    <a href="servizi.html" class="group inline-flex items-center text-sm font-bold uppercase tracking-widest hover:text-stone-500 transition-colors">
+                        Scopri cosa facciamo
+                        <span class="ml-2 transform group-hover:translate-x-2 transition-transform">→</span>
+                    </a>
+                </div>
             </div>
         </section>
     </main>

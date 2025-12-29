@@ -1,6 +1,8 @@
 /* global AOS */
 document.addEventListener("DOMContentLoaded", function() {
 
+    // --- CORE FUNCTIONS ---
+    
     const loadHTML = (elementId, filePath) => {
         return fetch(filePath)
             .then(response => {
@@ -16,23 +18,60 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function initializeSite() {
         setupNav();
-        setupContactForm();
+        setupParallax();
+        setupProjectAnimations();
         updateCopyrightYear();
+        
+        // Inizializza AOS con parametri ottimizzati
         setTimeout(() => {
             AOS.init({
                 once: true,
-                duration: 800,
-                easing: 'ease-out-cubic',
-                offset: 100,
+                duration: 1000,
+                easing: 'cubic-bezier(0.16, 1, 0.3, 1)', // Ease Out Expo
+                offset: 50,
+                anchorPlacement: 'top-bottom',
             });
             AOS.refresh();
         }, 100);
 
-        setupTextRevealAnimation();
+        // Avvia animazione testo con un piccolo ritardo per permettere il rendering
+        setTimeout(setupTextRevealAnimation, 50);
+    }
+
+    // --- UI ENHANCEMENTS ---
+
+    function setupParallax() {
+        // Semplice effetto parallax sulle immagini
+        const parallaxImages = document.querySelectorAll('.parallax-img');
+        
+        if (parallaxImages.length > 0) {
+            // Funzione di aggiornamento ottimizzata con requestAnimationFrame
+            let ticking = false;
+            
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollY = window.scrollY;
+                        const windowHeight = window.innerHeight;
+                        
+                        parallaxImages.forEach(img => {
+                            const rect = img.getBoundingClientRect();
+                            // Calcola offset solo se l'immagine è visibile o sta per esserlo
+                            if (rect.top < windowHeight && rect.bottom > 0) {
+                                const speed = parseFloat(img.getAttribute('data-speed') || 0.1);
+                                const offset = (windowHeight - rect.top) * speed;
+                                img.style.transform = `scale(1.1) translateY(${offset}px)`;
+                            }
+                        });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
     }
 
     function setupNav() {
-        // Gestione Navbar Principale
         const nav = document.getElementById('main-nav');
         if (nav) {
             const logo = document.getElementById('nav-logo');
@@ -44,154 +83,131 @@ document.addEventListener("DOMContentLoaded", function() {
             const isHomePage = path.endsWith('index.html') || path === '/' || path.endsWith('/SitoZup/') || path.endsWith('/SitoZup');
             
             let isMenuOpen = false;
+            
             const updateNavState = () => {
                 const isScrolled = window.scrollY > 50;
                 const showTransparentNav = isHomePage && !isScrolled && !isMenuOpen;
-                nav.classList.remove('bg-black/30', 'text-white', 'bg-gradient-to-b', 'from-black/40', 'to-transparent');
-
-                if (logo) {
-                    logo.classList.remove('invert', 'brightness-0');
-                }
+                
+                // Reset classi base
+                nav.className = 'fixed w-full z-50 transition-all duration-500 ease-in-out px-6 md:px-12 py-4';
 
                 if (showTransparentNav) {
-                    nav.classList.add('bg-white/70', 'backdrop-blur-md', 'shadow-sm', 'text-black');
-                    nav.classList.remove('bg-white/95', 'bg-white/40', 'backdrop-blur-lg');
+                    nav.classList.add('bg-transparent', 'text-white');
+                    if (logo) logo.classList.add('brightness-0', 'invert'); // Logo bianco su sfondo scuro
                 } else {
-                    nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'text-black');
-                    nav.classList.remove('bg-white/40', 'backdrop-blur-lg');
+                    nav.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'text-black');
+                    if (logo) logo.classList.remove('brightness-0', 'invert');
                 }
             };
 
-            // Event Listeners
             window.addEventListener('scroll', updateNavState);
             
             if (menuBtn) {
                 menuBtn.addEventListener('click', () => {
                     isMenuOpen = !isMenuOpen;
                     
-                    // Gestione visibilità menu mobile
                     if (mobileMenu) {
-                        // Aggiungi le classi di transizione solo quando si interagisce con il menu
-                        mobileMenu.classList.add('transition-transform', 'duration-500', 'ease-in-out');
-
                         if (isMenuOpen) {
-                            // Apri menu
-                            mobileMenu.style.display = 'flex'; // Ripristina display flex
-                            mobileMenu.classList.remove('hidden'); // Rimuovi classe hidden di Tailwind
-                            
-                            // Forza un reflow per assicurare che la transizione avvenga
-                            void mobileMenu.offsetWidth;
-                            
-                            mobileMenu.style.visibility = 'visible';
-                            mobileMenu.classList.remove('invisible');
-                            
-                            requestAnimationFrame(() => {
-                                mobileMenu.style.transform = 'translateX(0)';
-                                mobileMenu.classList.remove('translate-x-full');
-                            });
+                            mobileMenu.classList.remove('hidden', 'translate-x-full');
+                            document.body.style.overflow = 'hidden'; // Blocca scroll
                         } else {
-                            mobileMenu.style.transform = 'translateX(100%)';
                             mobileMenu.classList.add('translate-x-full');
-                            setTimeout(() => {
-                                if (!isMenuOpen) {
-                                    mobileMenu.style.visibility = 'hidden';
-                                    mobileMenu.classList.add('invisible');
-                                    mobileMenu.style.display = 'none'; // Nascondi completamente
-                                    mobileMenu.classList.add('hidden'); // Aggiungi classe hidden di Tailwind
-                                    // Rimuovi le classi di transizione dopo la chiusura
-                                    mobileMenu.classList.remove('transition-transform', 'duration-500', 'ease-in-out');
-                                }
-                            }, 500); // 500ms corrisponde a duration-500
+                            setTimeout(() => mobileMenu.classList.add('hidden'), 500);
+                            document.body.style.overflow = '';
                         }
                     }
                     
+                    // Animazione icona hamburger
                     if (menuSpans.length === 3) {
                         const [s1, s2, s3] = menuSpans;
-                        s1.classList.toggle('rotate-45', isMenuOpen);
-                        s1.classList.toggle('translate-y-2', isMenuOpen);
-                        s2.classList.toggle('opacity-0', isMenuOpen);
-                        s3.classList.toggle('-rotate-45', isMenuOpen);
-                        s3.classList.toggle('-translate-y-2', isMenuOpen);
+                        if (isMenuOpen) {
+                            s1.classList.add('rotate-45', 'translate-y-2');
+                            s2.classList.add('opacity-0');
+                            s3.classList.add('-rotate-45', '-translate-y-2');
+                            // Forza colore nero quando menu aperto
+                            menuBtn.classList.add('text-black');
+                            menuBtn.classList.remove('text-white');
+                        } else {
+                            s1.classList.remove('rotate-45', 'translate-y-2');
+                            s2.classList.remove('opacity-0');
+                            s3.classList.remove('-rotate-45', '-translate-y-2');
+                            // Ripristina colore in base allo stato nav
+                            updateNavState();
+                        }
                     }
-                    
-                    updateNavState();
                 });
             }
 
-            // Inizializzazione immediata
-            // Eseguiamo updateNavState subito, ma anche dopo un piccolo ritardo per assicurarci che il DOM sia pronto
             updateNavState();
             setTimeout(updateNavState, 50);
             
-            // Gestione link attivi
+            // Active Link Logic
             const navLinks = document.querySelectorAll('.nav-link');
             const currentPath = path.split('/').pop() || 'index.html';
             navLinks.forEach(link => {
-                const linkPath = link.getAttribute('href').split('/').pop();
-                if (linkPath === currentPath) {
+                if (link.getAttribute('href').includes(currentPath)) {
                     link.classList.add('active');
                 }
             });
         }
-
-        // Gestione Navbar Progetto
-        const projectNav = document.getElementById('project-nav');
-        if (projectNav) {
-             const navTitle = document.getElementById('nav-project-title');
-             
-             // Cerchiamo il titolo del progetto nella pagina (h1)
-             const pageTitle = document.querySelector('h1');
-             if (navTitle && pageTitle) {
-                 navTitle.textContent = pageTitle.textContent;
-             }
-
-             // Mostra il titolo nella navbar solo quando si scrolla oltre l'header
-             window.addEventListener('scroll', () => {
-                 if (window.scrollY > 400) {
-                     navTitle.classList.remove('opacity-0');
-                 } else {
-                     navTitle.classList.add('opacity-0');
-                 }
-             });
-        }
     }
 
-    function setupContactForm() {
-        const contactForm = document.getElementById("contact-form");
-        // Logica form...
+    function setupProjectAnimations() {
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach((card, index) => {
+            if (!card.hasAttribute('data-aos')) {
+                card.setAttribute('data-aos', 'fade-up');
+            }
+            if (!card.hasAttribute('data-aos-delay')) {
+                // Staggered delay per griglia
+                const delay = 100 + (index % 3) * 150; 
+                card.setAttribute('data-aos-delay', delay);
+            }
+        });
     }
-    
+
+    function setupTextRevealAnimation() {
+        const textElements = document.querySelectorAll('.reveal-text');
+        
+        if (textElements.length === 0) return;
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const delay = parseInt(el.getAttribute('data-delay') || 0);
+                    
+                    // Usa requestAnimationFrame per sincronizzare con il refresh rate
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            el.classList.add('reveal-text-anim');
+                        }, delay);
+                    });
+                    
+                    observer.unobserve(el);
+                }
+            });
+        }, observerOptions);
+
+        textElements.forEach(el => {
+            // Aggiungi classe init immediatamente
+            el.classList.add('reveal-text-init');
+            observer.observe(el);
+        });
+    }
+
     function updateCopyrightYear() {
         const yearSpan = document.getElementById("copyright-year");
         if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
     }
 
-    function setupTextRevealAnimation() {
-        const textElements = document.querySelectorAll('main h1, main h2, main h3, section h1, section h2, section h3, header h1');
-        
-        textElements.forEach(el => {
-            if (el.offsetParent === null) return;
-            const computedStyle = window.getComputedStyle(el);
-            el.style.setProperty('--reveal-color', computedStyle.color);
-            el.classList.add('reveal-text-init');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const aosDelay = el.getAttribute('data-aos-delay') || 0;
-                        const aosDuration = el.getAttribute('data-aos-duration') || 800;
-                        const totalDelay = parseInt(aosDelay) + (parseInt(aosDuration) * 0.5); 
-                        setTimeout(() => el.classList.add('reveal-text-anim'), totalDelay);
-                        observer.unobserve(el);
-                    }
-                });
-            }, { threshold: 0.1 });
-            observer.observe(el);
-        });
-    }
-
-    // --- ESECUZIONE ---
-    // Determina quale navbar caricare
+    // --- INIT ---
     const mainNavPlaceholder = document.getElementById("main-nav-placeholder");
     const projectNavPlaceholder = document.getElementById("project-nav-placeholder");
     
