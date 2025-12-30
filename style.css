@@ -45,34 +45,54 @@ h1, h2, h3, h4, .serif {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
+/* --- GESTIONE CARD E IMMAGINI (MODELLO BASE) --- */
 .project-card {
     position: relative;
     overflow: hidden;
     display: block;
-    transform: translateZ(0);
     background-color: #e5e5e5;
 }
 
-.project-card img,
-.parallax-img {
+/* Regola universale per le immagini di copertina: centrate e riempitive */
+.cover-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.1s linear;
-    will-change: transform;
+    object-fit: cover;           /* Riempie il box senza deformarsi */
+    object-position: center;     /* Il soggetto è sempre al centro */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Movimento fluido solo all'hover */
+    display: block;
+}
+
+/* Effetto Hover semplice: leggero zoom quando passi sopra col mouse */
+.project-card:hover .cover-img {
+    transform: scale(1.03);
 }
 
 .project-overlay {
     background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
     opacity: 0.3;
     transition: opacity 0.5s ease;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
 }
 
 .project-card:hover .project-overlay {
     opacity: 0.5;
 }
 
+.project-info {
+    transform: translateY(15px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover .project-info {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* --- ELEMENTI UI GENERICI --- */
 .magnetic-btn {
     position: relative;
     overflow: hidden;
@@ -99,17 +119,6 @@ h1, h2, h3, h4, .serif {
 
 .magnetic-btn:hover::before {
     width: 100%;
-}
-
-.project-info {
-    transform: translateY(15px);
-    opacity: 0;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card:hover .project-info {
-    transform: translateY(0);
-    opacity: 1;
 }
 
 .line-reveal {
@@ -154,6 +163,7 @@ h1, h2, h3, h4, .serif {
     transform: translateY(-8px);
 }
 
+/* Zoom immagini dettagli interni */
 .image-zoom {
     overflow: hidden;
 }
@@ -163,14 +173,15 @@ h1, h2, h3, h4, .serif {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .image-zoom:hover .zoom-img {
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
 .glass-nav {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(0,0,0,0.05);

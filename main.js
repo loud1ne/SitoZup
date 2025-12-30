@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function initializeSite() {
         setupNav();
-        setupParallax();
+        // setupParallax rimossa per stabilità
         setupProjectAnimations();
         updateCopyrightYear();
 
@@ -59,57 +59,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             setupTextRevealAnimation();
         }, 150);
-    }
-
-    function setupParallax() {
-        if (window.innerWidth < 768) return;
-
-        const parallaxImages = document.querySelectorAll('.parallax-img');
-        if (parallaxImages.length === 0) return;
-
-        parallaxImages.forEach(img => {
-            if(img.parentElement) {
-                img.parentElement.style.overflow = 'hidden';
-            }
-            img.style.transform = 'scale(1.15)';
-        });
-
-        let ticking = false;
-
-        const updateParallax = () => {
-            const viewportHeight = window.innerHeight;
-            const viewportCenter = viewportHeight / 2;
-
-            parallaxImages.forEach(img => {
-                const container = img.parentElement;
-                if (!container) return;
-
-                const rect = container.getBoundingClientRect();
-
-                if (rect.bottom > 0 && rect.top < viewportHeight) {
-                    const containerCenter = rect.top + rect.height / 2;
-                    const distFromCenter = containerCenter - viewportCenter;
-                    let speed = parseFloat(img.getAttribute('data-speed') || 0.08);
-
-                    if (img.classList.contains('parallax-top')) {
-                        speed = 0.4;
-                    }
-
-                    const translateY = distFromCenter * speed;
-                    img.style.transform = `translateY(${translateY}px) scale(1.15)`;
-                }
-            });
-            ticking = false;
-        };
-
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        });
-
-        updateParallax();
     }
 
     function setupNav() {
