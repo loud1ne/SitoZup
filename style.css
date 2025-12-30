@@ -55,11 +55,17 @@ h1, h2, h3, h4, .serif {
 }
 
 /* Componenti */
+/* Magnetic Button Removed - replaced with standard hover effects */
 .magnetic-btn {
     display: inline-block;
-    transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.3s ease;
     will-change: transform;
 }
+.magnetic-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1);
+}
+
 
 .parallax-container {
     overflow: hidden;

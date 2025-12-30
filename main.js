@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function initializeSite() {
         setupNav();
         setupParallax();
-        setupMagneticButtons();
+        // setupMagneticButtons(); // Disabilitato come richiesto
         setupProjectAnimations();
         updateCopyrightYear();
 
@@ -68,22 +68,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- UI ENHANCEMENTS ---
 
-    function setupMagneticButtons() {
-        const btns = document.querySelectorAll('.magnetic-btn');
-        btns.forEach(btn => {
-            btn.addEventListener('mousemove', function(e) {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-            });
-            btn.addEventListener('mouseleave', function() {
-                btn.style.transform = 'translate(0px, 0px)';
-            });
-        });
-    }
+    /* Funzione Magnetic Buttons rimossa per richiesta utente */
 
     function setupParallax() {
+        // Disable on mobile for performance
+        if (window.innerWidth < 768) return;
+
         const parallaxImages = document.querySelectorAll('.parallax-img');
         if (parallaxImages.length === 0) return;
 
@@ -113,35 +103,32 @@ document.addEventListener("DOMContentLoaded", function() {
                             const h = rect.height;
                             
                             // Percentuale di attraversamento del viewport
-                            // 0 = il top del contenitore entra dal basso
-                            // 1 = il bottom del contenitore esce dall'alto
-                            // Usiamo una formula che centra l'effetto:
-                            // Quando il centro del contenitore è al centro dello schermo, offset = 0
-                            
                             const containerCenter = rect.top + h / 2;
                             const screenCenter = windowHeight / 2;
                             const distFromCenter = containerCenter - screenCenter;
                             
-                            // Fattore di velocità (più basso = più lento/sottile)
+                            // Fattore di velocità
                             const speed = parseFloat(img.getAttribute('data-speed') || 0.15);
                             
                             // Calcolo offset grezzo
                             let translateY = distFromCenter * speed;
                             
                             // --- LOGICA ANTI-BORDI NERI ---
-                            // L'immagine è scalata (es. 1.2x).
-                            // Abbiamo un margine di movimento pari a (imgHeight - containerHeight) / 2
-                            // Se scale = 1.2, imgHeight = 1.2 * h.
-                            // Margine = (1.2h - h) / 2 = 0.1h.
-                            // Quindi translateY non deve superare +/- 0.1h.
+                            // Rileva se l'immagine è "top" (Home) o standard per applicare lo scale corretto
+                            // Questo evita il "salto" di zoom quando inizia lo scroll
+                            const isTop = img.classList.contains('parallax-top');
+                            const scale = isTop ? 1.2 : 1.1;
                             
-                            const scale = 1.2; 
-                            // Calcoliamo il limite di traslazione considerando che lo scale amplifica lo spostamento
-                            const maxTranslation = ((h * (scale - 1)) / 2) / scale;
+                            // Calcoliamo il limite di traslazione
+                            // Margine disponibile = (h * scale - h) / 2
+                            const maxTranslation = (h * (scale - 1)) / 2;
                             
                             // Clampiamo il valore per assicurarci che non esca mai dai bordi
-                            if (translateY > maxTranslation) translateY = maxTranslation;
-                            if (translateY < -maxTranslation) translateY = -maxTranslation;
+                            // Buffer di 1px per sicurezza
+                            const safeLimit = maxTranslation - 1;
+                            
+                            if (translateY > safeLimit) translateY = safeLimit;
+                            if (translateY < -safeLimit) translateY = -safeLimit;
                             
                             // Applichiamo la trasformazione
                             img.style.transform = `translateY(${translateY}px) scale(${scale})`;
@@ -222,6 +209,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         s2.classList.remove('opacity-0');
                         s3.classList.remove('-rotate-45', '-translate-y-2');
                     }
+                });
+
+                // Chiudi menu al click sui link
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (isMenuOpen) menuBtn.click();
+                    });
                 });
             }
             updateNavState();
