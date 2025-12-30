@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="refresh" content="no-cache">
+    <meta http-equiv="refresh" content="0">
     <title>Contatti | Zuppardo Costruzioni</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏗️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="vendor/aos/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .checkmark { width: 80px; height: 80px; border-radius: 50%; display: block; stroke-width: 2; stroke: #fff; stroke-miterlimit: 10; margin: 0 auto 2rem auto; box-shadow: inset 0px 0px 0px #4ade80; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
+        .checkmark { width: 80px; height: 80px; border-radius: 50%; display: block; stroke-width: 2; stroke: #fff; stroke-miterlimit: 10; margin: 0 auto 2rem auto; box-shadow: inset 0 0 0 #4ade80; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
         .checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke-miterlimit: 10; stroke: #4ade80; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
         .checkmark__check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
         @keyframes stroke { 100% { stroke-dashoffset: 0; } }
         @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
-        @keyframes fill { 100% { box-shadow: inset 0px 0px 0px 40px #4ade80; } }
+        @keyframes fill { 100% { box-shadow: inset 0 0 0 40px #4ade80; } }
         .form-container { transition: opacity 0.5s ease-out; }
     </style>
 </head>
@@ -44,25 +47,28 @@
     </div>
 
     <div class="bg-white p-8 md:p-12 shadow-2xl relative min-h-[500px] flex flex-col justify-center overflow-hidden" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+        <div class="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none">
+            <img src="assets/images/logozuppardo.png" class="h-full w-full object-contain object-center brightness-0 invert" alt="bg">
+        </div>
 
-        <div id="form-wrapper" class="form-container">
+        <div id="form-wrapper" class="form-container relative z-10">
             <form id="contact-form" class="space-y-8">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="Nuova richiesta dal sito Zuppardo">
 
                 <div class="group">
-                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Nome Completo</label>
-                    <input type="text" name="name" required class="w-full border-b border-stone-300 py-2 outline-none focus:border-black transition-colors bg-transparent text-lg">
+                    <label for="name" class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Nome Completo</label>
+                    <input id="name" type="text" name="name" required class="w-full border-b border-stone-300 py-2 outline-none focus:border-black transition-colors bg-transparent text-lg">
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Email</label>
-                    <input type="email" name="email" required class="w-full border-b border-stone-300 py-2 outline-none focus:border-black transition-colors bg-transparent text-lg">
+                    <label for="email" class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Email</label>
+                    <input id="email" type="email" name="email" required class="w-full border-b border-stone-300 py-2 outline-none focus:border-black transition-colors bg-transparent text-lg">
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Interesse</label>
-                    <select name="service" class="w-full border-b border-stone-300 py-2 outline-none bg-transparent cursor-pointer text-lg focus:border-black transition-colors">
+                    <label for="service" class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Interesse</label>
+                    <select id="service" name="service" class="w-full border-b border-stone-300 py-2 outline-none bg-transparent cursor-pointer text-lg focus:border-black transition-colors">
                         <option value="Nuova Costruzione">Nuova Costruzione</option>
                         <option value="Ristrutturazione">Ristrutturazione</option>
                         <option value="Consulenza">Consulenza</option>
@@ -70,8 +76,8 @@
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Messaggio</label>
-                    <textarea name="message" rows="3" required class="w-full border-b border-stone-300 py-2 outline-none focus:border-black transition-colors bg-transparent text-lg resize-none"></textarea>
+                    <label for="message" class="block text-xs uppercase tracking-widest text-stone-500 mb-2 group-focus-within:text-black transition-colors">Messaggio</label>
+                    <textarea id="message" name="message" rows="3" required class="w-full border-b border-stone-300 py-2 outline-none focus:border-black transition-colors bg-transparent text-lg resize-none"></textarea>
                 </div>
 
                 <button type="submit" id="submit-btn" class="w-full bg-stone-900 text-white py-4 font-bold uppercase tracking-widest text-xs hover:bg-stone-700 transition-colors magnetic-btn">
@@ -133,7 +139,7 @@
                         if (response.ok) return response.json();
                         throw new Error('Network response was not ok.');
                     })
-                    .then(data => {
+                    .then(() => {
                         formWrapper.style.opacity = '0';
                         setTimeout(() => {
                             formWrapper.classList.add('hidden');

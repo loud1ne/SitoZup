@@ -1,7 +1,7 @@
-<nav class="fixed top-0 w-full px-6 py-4 md:px-12 grid grid-cols-2 md:grid-cols-3 items-center z-50 bg-white/95 backdrop-blur-md shadow-sm text-black transition-all duration-300" id="project-nav">
+<nav class="fixed top-0 w-full px-6 py-4 md:px-12 flex justify-between items-center md:grid md:grid-cols-3 z-50 bg-white/95 backdrop-blur-md shadow-sm text-black transition-all duration-300" id="project-nav">
 
-    <div class="justify-self-start">
-        <a href="progetti.html" class="flex items-center gap-2 text-xs font-semibold tracking-wide uppercase hover:text-stone-600 transition-colors">
+    <div class="flex-shrink-0 md:justify-self-start z-10">
+        <a href="../progetti.html" class="flex items-center gap-2 text-xs font-semibold tracking-wide uppercase hover:text-stone-600 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
@@ -10,13 +10,13 @@
         </a>
     </div>
 
-    <div class="justify-self-center text-center hidden md:block">
-        <span class="text-sm font-serif font-bold uppercase tracking-widest text-stone-900">Portfolio</span>
+    <div class="hidden md:block md:justify-self-center text-center px-4 overflow-hidden md:w-auto min-w-0">
+        <span id="nav-project-title" class="text-sm font-serif font-bold uppercase tracking-widest text-stone-900 opacity-0 transition-opacity duration-500 block truncate">Portfolio</span>
     </div>
 
-    <div class="justify-self-end">
-        <a href="index.html" class="block">
-            <img src="assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-8 md:h-12 w-auto object-contain">
+    <div class="flex-shrink-0 md:justify-self-end z-10">
+        <a href="../index.html" class="block">
+            <img src="../assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-8 md:h-12 w-auto object-contain">
         </a>
     </div>
 </nav>

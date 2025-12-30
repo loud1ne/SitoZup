@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="refresh" content="no-cache">
+    <meta http-equiv="refresh" content="0">
     <title>Progetti | Zuppardo Costruzioni</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏗️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,22 +29,31 @@
 <section class="px-6 md:px-20 pb-32 max-w-screen-2xl mx-auto">
     <div class="flex flex-col gap-20 md:gap-32">
 
-        <a href="progetti/villa-orizzonte.html" class="group project-card block w-full shadow-lg">
-            <div class="relative w-full aspect-[4/5] md:aspect-video overflow-hidden bg-stone-200">
-                <img src="assets/images/progetti/istockphoto-182371365-1024x1024.jpg"
-                     class="cover-img"
-                     alt="Villa Orizzonte">
-                <div class="project-overlay"></div>
+        <div class="w-full">
+            <a href="progetti/villa-orizzonte.html" class="group project-card block w-full shadow-lg">
+                <div class="relative w-full aspect-[4/5] md:aspect-video overflow-hidden bg-stone-200">
+                    <img src="assets/images/progetti/istockphoto-182371365-1024x1024.jpg"
+                         class="cover-img"
+                         alt="Villa Orizzonte">
+                    <div class="project-overlay"></div>
 
-                <div class="absolute bottom-0 left-0 p-8 md:p-16 text-white z-10 w-full">
-                    <div class="project-info">
-                        <span class="text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4 inline-block">Residenziale • 2023</span>
-                        <h2 class="text-4xl md:text-7xl serif mb-2">Villa Orizzonte</h2>
-                        <p class="text-sm md:text-lg font-light opacity-90 max-w-md hidden md:block">Un dialogo continuo tra architettura moderna e paesaggio naturale.</p>
+                    <div class="absolute bottom-0 left-0 p-8 md:p-16 text-white z-10 w-full hidden md:block">
+                        <div class="project-info">
+                            <span class="text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4 inline-block">Residenziale • 2023</span>
+                            <h2 class="text-4xl md:text-7xl serif mb-2">Villa Orizzonte</h2>
+                            <p class="text-sm md:text-lg font-light opacity-90 max-w-md hidden md:block">Un dialogo continuo tra architettura moderna e paesaggio naturale.</p>
+                        </div>
                     </div>
                 </div>
+            </a>
+            <!-- Mobile Info -->
+            <div class="md:hidden pt-6" data-aos="fade-up">
+                <span class="text-[10px] uppercase tracking-widest text-stone-500 block mb-2">Residenziale • 2023</span>
+                <a href="progetti/villa-orizzonte.html"><h2 class="text-3xl serif mb-2">Villa Orizzonte</h2></a>
+                <p class="text-sm text-stone-600 font-light leading-relaxed mb-4">Un dialogo continuo tra architettura moderna e paesaggio naturale.</p>
+                <a href="progetti/villa-orizzonte.html" class="text-xs font-bold uppercase border-b border-stone-300 pb-1 hover:border-black transition-colors">Scopri il progetto</a>
             </div>
-        </a>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20 items-start">
             <div class="md:col-span-7 md:-mt-24">
@@ -51,7 +63,7 @@
                              class="cover-img"
                              alt="Casale dei Venti">
                         <div class="project-overlay"></div>
-                        <div class="absolute bottom-0 left-0 p-8 text-white z-10">
+                        <div class="absolute bottom-0 left-0 p-8 text-white z-10 hidden md:block">
                             <div class="project-info">
                                 <h3 class="text-3xl md:text-5xl serif">Casale dei Venti</h3>
                                 <p class="text-xs uppercase tracking-widest mt-2 opacity-80">Ragusa • Restauro</p>
@@ -59,6 +71,12 @@
                         </div>
                     </div>
                 </a>
+                <!-- Mobile Info -->
+                <div class="md:hidden pt-6" data-aos="fade-up">
+                    <span class="text-[10px] uppercase tracking-widest text-stone-500 block mb-2">Ragusa • Restauro</span>
+                    <a href="progetti/casale-dei-venti.html"><h3 class="text-3xl serif mb-2">Casale dei Venti</h3></a>
+                    <a href="progetti/casale-dei-venti.html" class="text-xs font-bold uppercase border-b border-stone-300 pb-1 hover:border-black transition-colors">Scopri il progetto</a>
+                </div>
             </div>
 
             <div class="md:col-span-5 flex flex-col justify-center h-full pt-8 md:pt-24">
@@ -102,7 +120,7 @@
                              class="cover-img"
                              alt="Villa Marina">
                         <div class="project-overlay"></div>
-                        <div class="absolute bottom-0 left-0 p-8 text-white z-10">
+                        <div class="absolute bottom-0 left-0 p-8 text-white z-10 hidden md:block">
                             <div class="project-info">
                                 <h3 class="text-3xl md:text-5xl serif">Villa Marina</h3>
                                 <p class="text-xs uppercase tracking-widest mt-2 opacity-80">Taormina • Ristrutturazione</p>
@@ -110,6 +128,12 @@
                         </div>
                     </div>
                 </a>
+                <!-- Mobile Info -->
+                <div class="md:hidden pt-6" data-aos="fade-up">
+                    <span class="text-[10px] uppercase tracking-widest text-stone-500 block mb-2">Taormina • Ristrutturazione</span>
+                    <a href="progetti/villa-marina.html"><h3 class="text-3xl serif mb-2">Villa Marina</h3></a>
+                    <a href="progetti/villa-marina.html" class="text-xs font-bold uppercase border-b border-stone-300 pb-1 hover:border-black transition-colors">Scopri il progetto</a>
+                </div>
             </div>
         </div>
 

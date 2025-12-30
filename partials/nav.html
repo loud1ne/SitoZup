@@ -1,13 +1,24 @@
 <nav class="fixed top-0 left-0 w-full px-6 py-4 md:px-12 flex justify-between items-center z-[100] transition-all duration-500 ease-in-out" id="main-nav">
-    <a href="index.html" class="relative block group z-[101]">
-        <img id="nav-logo" src="assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-10 md:h-14 w-auto object-contain transition-all duration-300">
+    <a href="../index.html" class="relative block group z-[101]">
+        <img id="nav-logo" src="../assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-10 md:h-14 w-auto object-contain transition-all duration-300">
     </a>
 
-    <div class="hidden md:flex gap-10 text-xs font-semibold tracking-wide uppercase items-center">
-        <a href="index.html" class="nav-link hover:text-stone-500 transition-colors py-1">Home</a>
-        <a href="progetti.html" class="nav-link hover:text-stone-500 transition-colors py-1">Progetti</a>
-        <a href="servizi.html" class="nav-link hover:text-stone-500 transition-colors py-1">Servizi</a>
-        <a href="contatti.html" class="nav-link px-6 py-2 border border-current hover:bg-stone-900 hover:text-white hover:border-transparent transition-all">Contattaci</a>
+    <div class="hidden md:flex gap-8 text-xs font-semibold tracking-wide uppercase items-center">
+        <a href="../index.html" class="nav-link relative py-2 px-1 group overflow-hidden">
+            <span class="relative z-10 transition-colors duration-300 group-hover:text-stone-500">Home</span>
+            <span class="absolute bottom-0 left-0 w-full h-[1px] bg-stone-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+        </a>
+        <a href="../progetti.html" class="nav-link relative py-2 px-1 group overflow-hidden">
+            <span class="relative z-10 transition-colors duration-300 group-hover:text-stone-500">Progetti</span>
+            <span class="absolute bottom-0 left-0 w-full h-[1px] bg-stone-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+        </a>
+        <a href="../servizi.html" class="nav-link relative py-2 px-1 group overflow-hidden">
+            <span class="relative z-10 transition-colors duration-300 group-hover:text-stone-500">Servizi</span>
+            <span class="absolute bottom-0 left-0 w-full h-[1px] bg-stone-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+        </a>
+        <a href="../contatti.html" class="nav-link px-6 py-2 border border-current hover:bg-stone-900 hover:text-white hover:border-transparent transition-all duration-300 rounded-sm">
+            Contattaci
+        </a>
     </div>
 
     <button id="menu-btn" class="block md:hidden focus:outline-none p-2 w-10 h-10 relative z-[101]">
@@ -19,9 +30,14 @@
     </button>
 </nav>
 
-<div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] z-[90] bg-[#Fdfbf7] text-black flex flex-col items-center justify-center space-y-8 text-4xl serif transform translate-x-full transition-transform duration-500 hidden overflow-y-auto overscroll-none">
-    <a href="index.html" class="mobile-nav-link hover:italic transition-all">Home</a>
-    <a href="progetti.html" class="mobile-nav-link hover:italic transition-all">Progetti</a>
-    <a href="servizi.html" class="mobile-nav-link hover:italic transition-all">Servizi</a>
-    <a href="contatti.html" class="mobile-nav-link hover:italic transition-all">Contatti</a>
+<div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] z-[90] bg-[#Fdfbf7]/98 backdrop-blur-xl text-black flex flex-col items-center justify-center space-y-8 text-4xl serif transform translate-x-full transition-transform duration-500 hidden overflow-y-auto overscroll-none">
+    <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none bg-[url('../assets/images/logozuppardo.png')] bg-no-repeat bg-center bg-contain grayscale"></div>
+    <a href="../index.html" class="mobile-nav-link hover:italic transition-all relative z-10">Home</a>
+    <a href="../progetti.html" class="mobile-nav-link hover:italic transition-all relative z-10">Progetti</a>
+    <a href="../servizi.html" class="mobile-nav-link hover:italic transition-all relative z-10">Servizi</a>
+    <a href="../contatti.html" class="mobile-nav-link hover:italic transition-all relative z-10">Contatti</a>
+
+    <div class="absolute bottom-12 left-0 w-full text-center">
+        <p class="text-xs uppercase tracking-widest text-stone-400 font-sans mobile-nav-footer">Est. 1985 • Sicilia</p>
+    </div>
 </div>

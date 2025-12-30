@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    font-family: var(--font-sans);
+    font-family: var(--font-sans), sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
     -webkit-font-smoothing: antialiased;
@@ -38,7 +38,7 @@ body {
 }
 
 h1, h2, h3, h4, .serif {
-    font-family: var(--font-serif);
+    font-family: var(--font-serif), serif;
 }
 
 .texture-bg {
@@ -105,7 +105,7 @@ h1, h2, h3, h4, .serif {
     position: absolute;
     top: 0;
     left: 0;
-    width: 0%;
+    width: 0;
     height: 100%;
     background-color: var(--color-dark);
     transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -119,6 +119,10 @@ h1, h2, h3, h4, .serif {
 
 .magnetic-btn:hover::before {
     width: 100%;
+}
+
+.magnetic-btn:active {
+    transform: scale(0.96);
 }
 
 .line-reveal {
@@ -187,6 +191,69 @@ h1, h2, h3, h4, .serif {
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
+/* --- MOBILE MENU ANIMATIONS --- */
+.mobile-nav-link {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#mobile-menu.open .mobile-nav-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#mobile-menu.open .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
+#mobile-menu.open .mobile-nav-link:nth-child(2) { transition-delay: 0.2s; }
+#mobile-menu.open .mobile-nav-link:nth-child(3) { transition-delay: 0.3s; }
+#mobile-menu.open .mobile-nav-link:nth-child(4) { transition-delay: 0.4s; }
+
+.mobile-nav-footer {
+    opacity: 0;
+    transition: opacity 0.6s ease 0.5s;
+}
+
+#mobile-menu.open .mobile-nav-footer {
+    opacity: 1;
+}
+
+/* --- MOBILE OPTIMIZATIONS --- */
 @media (max-width: 768px) {
+    /* Show project info on mobile by default */
+    .project-info {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Ensure overlay is visible on mobile for text readability */
+    .project-overlay {
+        opacity: 0.6;
+    }
+
+    .cover-img {
+        transform: scale(1);
+    }
+
     .mobile-hidden { display: none !important; }
+}
+
+@keyframes scroll-anim {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.scroll-line-anim {
+    animation: scroll-anim 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+@keyframes slow-zoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+.animate-slow-zoom {
+    animation: slow-zoom 25s linear infinite alternate;
+    will-change: transform;
 }

@@ -1,3 +1,4 @@
+/* global AOS */
 document.addEventListener("DOMContentLoaded", function() {
 
     const loadHTML = (elementId, filePath) => {
@@ -10,30 +11,42 @@ document.addEventListener("DOMContentLoaded", function() {
                 return response.text();
             })
             .then(data => {
-                if (basePath === '../') {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text/html');
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
 
-                    const fixPath = (val) => {
-                        if (val && !val.startsWith('http') && !val.startsWith('//') && !val.startsWith('#') && !val.startsWith('mailto:') && !val.startsWith('data:') && !val.startsWith('../')) {
-                            return '../' + val;
-                        }
+                const fixPath = (val) => {
+                    if (!val || val.startsWith('http') || val.startsWith('//') || val.startsWith('#') || val.startsWith('mailto:') || val.startsWith('data:')) {
                         return val;
-                    };
+                    }
 
-                    doc.querySelectorAll('a').forEach(el => el.setAttribute('href', fixPath(el.getAttribute('href'))));
-                    doc.querySelectorAll('img').forEach(el => el.setAttribute('src', fixPath(el.getAttribute('src'))));
+                    // If we are in a subdirectory (basePath == '../')
+                    if (basePath === '../') {
+                        if (val.startsWith('../')) return val; // Already correct relative to root
+                        return '../' + val; // Add ../ to make it relative to root
+                    }
+                    // If we are in root (basePath == '')
+                    else {
+                        if (val.startsWith('../')) return val.substring(3); // Remove ../ to make it relative to current file
+                        return val; // Already correct
+                    }
+                };
 
-                    element.innerHTML = doc.body.innerHTML;
-                } else {
-                    element.innerHTML = data;
-                }
+                doc.querySelectorAll('a').forEach(el => {
+                    const href = el.getAttribute('href');
+                    if (href) el.setAttribute('href', fixPath(href));
+                });
+                doc.querySelectorAll('img').forEach(el => {
+                    const src = el.getAttribute('src');
+                    if (src) el.setAttribute('src', fixPath(src));
+                });
+
+                element.innerHTML = doc.body.innerHTML;
 
                 const scripts = element.querySelectorAll("script");
                 scripts.forEach(script => {
                     const newScript = document.createElement("script");
                     newScript.textContent = script.textContent;
-                    if(script.src) newScript.src = script.src;
+                    if (script.src) newScript.src = script.src;
                     document.body.appendChild(newScript);
                 });
             })
@@ -45,6 +58,8 @@ document.addEventListener("DOMContentLoaded", function() {
         // setupParallax rimossa per stabilità
         setupProjectAnimations();
         updateCopyrightYear();
+        // setupMobileProjectCards rimossa perché ora i titoli sono sempre visibili su mobile
+        setupProjectNavScroll();
 
         setTimeout(() => {
             if (typeof AOS !== 'undefined') {
@@ -106,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         document.body.style.overflow = 'hidden';
                         void mobileMenu.offsetWidth;
                         mobileMenu.classList.remove('translate-x-full');
+                        mobileMenu.classList.add('open'); // Trigger CSS animations
 
                         nav.classList.remove('bg-transparent', 'text-white');
                         nav.classList.add('text-black');
@@ -114,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         menuSpans.forEach(s => { s.classList.add('bg-black'); s.classList.remove('bg-white'); });
 
                     } else {
+                        mobileMenu.classList.remove('open');
                         mobileMenu.classList.add('translate-x-full');
                         document.body.style.overflow = '';
                         setTimeout(() => mobileMenu.classList.add('hidden'), 500);
@@ -149,7 +166,24 @@ document.addEventListener("DOMContentLoaded", function() {
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
                 const cleanHref = href ? href.replace('../', '') : '';
-                if (cleanHref === currentPath) link.classList.add('opacity-50');
+                
+                // Rimuovi la classe opacity-50 precedente
+                link.classList.remove('opacity-50');
+                
+                // Aggiungi la classe active se è la pagina corrente
+                if (cleanHref === currentPath) {
+                    link.classList.add('active-nav-link');
+                    // Per i link con underline animation, forza la larghezza al 100%
+                    const underline = link.querySelector('span.absolute');
+                    if (underline) {
+                        underline.classList.remove('scale-x-0');
+                        underline.classList.add('scale-x-100');
+                    }
+                    // Per il bottone Contattaci, magari cambia stile
+                    if (link.textContent.trim() === 'Contattaci') {
+                         link.classList.add('bg-stone-900', 'text-white', 'border-transparent');
+                    }
+                }
             });
         }
 
@@ -164,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             if (!card.hasAttribute('data-aos-delay')) {
                 const delay = 50 + (index % 3) * 100;
-                card.setAttribute('data-aos-delay', delay);
+                card.setAttribute('data-aos-delay', delay.toString());
             }
         });
     }
@@ -175,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
-                    const delay = parseInt(el.getAttribute('data-delay') || 0);
+                    const delay = parseInt(el.getAttribute('data-delay') || '0', 10);
                     setTimeout(() => el.classList.add('reveal-text-anim'), delay);
                     observer.unobserve(el);
                 }
@@ -191,6 +225,41 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateCopyrightYear() {
         const yearSpan = document.getElementById("copyright-year");
         if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
+    }
+
+    function setupProjectNavScroll() {
+        const navTitle = document.getElementById('nav-project-title');
+        // Cerca l'immagine principale del progetto (la prima immagine grande)
+        // Assumiamo che sia in un div con classe relativa all'inizio del body o simile
+        // In villa-orizzonte.html è: <div class="relative w-full aspect-[4/3] ..."> <img ... class="cover-img">
+        
+        // Cerchiamo l'h1 del progetto per prendere il titolo se serve, o usiamo quello hardcoded
+        const projectTitleH1 = document.querySelector('h1');
+        
+        if (navTitle && projectTitleH1) {
+            // Aggiorna il testo del nav con il titolo del progetto
+            navTitle.textContent = projectTitleH1.textContent;
+            
+            // L'elemento che deve uscire dalla viewport per far apparire il titolo
+            // Usiamo il contenitore dell'immagine principale
+            const heroImageContainer = projectTitleH1.closest('.relative'); 
+            
+            if (heroImageContainer) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) {
+                            // L'immagine non è più visibile -> Mostra titolo nella nav
+                            navTitle.classList.remove('opacity-0');
+                        } else {
+                            // L'immagine è visibile -> Nascondi titolo nella nav
+                            navTitle.classList.add('opacity-0');
+                        }
+                    });
+                }, { threshold: 0, rootMargin: "-60px 0px 0px 0px" }); // Offset per la navbar
+
+                observer.observe(heroImageContainer);
+            }
+        }
     }
 
     let basePath = '';
