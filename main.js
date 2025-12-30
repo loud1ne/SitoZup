@@ -1,19 +1,15 @@
-/* global AOS */
 document.addEventListener("DOMContentLoaded", function() {
-
-    // --- CORE FUNCTIONS ---
 
     const loadHTML = (elementId, filePath) => {
         const element = document.getElementById(elementId);
-        if (!element) return Promise.resolve(); // Salta se il placeholder non esiste
+        if (!element) return Promise.resolve();
 
         return fetch(filePath)
             .then(response => {
-                if (!response.ok) throw new Error(`File non trovato: ${filePath}`);
+                if (!response.ok) throw new Error(filePath);
                 return response.text();
             })
             .then(data => {
-                // Fix paths for partials loaded in subdirectories BEFORE inserting into DOM to avoid 404s
                 if (basePath === '../') {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(data, 'text/html');
@@ -27,13 +23,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     doc.querySelectorAll('a').forEach(el => el.setAttribute('href', fixPath(el.getAttribute('href'))));
                     doc.querySelectorAll('img').forEach(el => el.setAttribute('src', fixPath(el.getAttribute('src'))));
-                    
+
                     element.innerHTML = doc.body.innerHTML;
                 } else {
                     element.innerHTML = data;
                 }
 
-                // Esegue script all'interno dei partials se necessario
                 const scripts = element.querySelectorAll("script");
                 scripts.forEach(script => {
                     const newScript = document.createElement("script");
@@ -42,110 +37,85 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.body.appendChild(newScript);
                 });
             })
-            .catch(error => console.error(`Errore nel caricamento di ${filePath}:`, error));
+            .catch(error => console.error(error));
     };
 
     function initializeSite() {
         setupNav();
         setupParallax();
-        // setupMagneticButtons(); // Disabilitato come richiesto
         setupProjectAnimations();
         updateCopyrightYear();
 
-        // Inizializza AOS DOPO che tutto il DOM è pronto
         setTimeout(() => {
-            AOS.init({
-                once: true,
-                duration: 1000,
-                easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                offset: 50,
-                anchorPlacement: 'top-bottom',
-            });
-            AOS.refresh();
-            setupTextRevealAnimation(); // Avvia testo dopo AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    once: true,
+                    duration: 1000,
+                    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                    offset: 60,
+                    anchorPlacement: 'top-bottom',
+                });
+                AOS.refresh();
+            }
+            setupTextRevealAnimation();
         }, 150);
     }
 
-    // --- UI ENHANCEMENTS ---
-
-    /* Funzione Magnetic Buttons rimossa per richiesta utente */
-
     function setupParallax() {
-        // Disable on mobile for performance
         if (window.innerWidth < 768) return;
 
         const parallaxImages = document.querySelectorAll('.parallax-img');
         if (parallaxImages.length === 0) return;
 
-        // Rimuovi transizioni CSS
         parallaxImages.forEach(img => {
-            img.style.transition = 'none';
-            // Assicuriamoci che il parent abbia overflow hidden
-            if (img.parentElement) {
+            if(img.parentElement) {
                 img.parentElement.style.overflow = 'hidden';
             }
+            img.style.transform = 'scale(1.15)';
         });
 
         let ticking = false;
+
+        const updateParallax = () => {
+            const viewportHeight = window.innerHeight;
+            const viewportCenter = viewportHeight / 2;
+
+            parallaxImages.forEach(img => {
+                const container = img.parentElement;
+                if (!container) return;
+
+                const rect = container.getBoundingClientRect();
+
+                if (rect.bottom > 0 && rect.top < viewportHeight) {
+                    const containerCenter = rect.top + rect.height / 2;
+                    const distFromCenter = containerCenter - viewportCenter;
+                    let speed = parseFloat(img.getAttribute('data-speed') || 0.08);
+
+                    if (img.classList.contains('parallax-top')) {
+                        speed = 0.4;
+                    }
+
+                    const translateY = distFromCenter * speed;
+                    img.style.transform = `translateY(${translateY}px) scale(1.15)`;
+                }
+            });
+            ticking = false;
+        };
+
         window.addEventListener('scroll', () => {
             if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const windowHeight = window.innerHeight;
-
-                    parallaxImages.forEach(img => {
-                        const container = img.parentElement;
-                        const rect = container.getBoundingClientRect();
-                        
-                        // Calcola solo se il contenitore è visibile (o quasi)
-                        if (rect.bottom > 0 && rect.top < windowHeight) {
-                            
-                            // Altezza del contenitore
-                            const h = rect.height;
-                            
-                            // Percentuale di attraversamento del viewport
-                            const containerCenter = rect.top + h / 2;
-                            const screenCenter = windowHeight / 2;
-                            const distFromCenter = containerCenter - screenCenter;
-                            
-                            // Fattore di velocità
-                            const speed = parseFloat(img.getAttribute('data-speed') || 0.15);
-                            
-                            // Calcolo offset grezzo
-                            let translateY = distFromCenter * speed;
-                            
-                            // --- LOGICA ANTI-BORDI NERI ---
-                            // Rileva se l'immagine è "top" (Home) o standard per applicare lo scale corretto
-                            // Questo evita il "salto" di zoom quando inizia lo scroll
-                            const isTop = img.classList.contains('parallax-top');
-                            const scale = isTop ? 1.2 : 1.1;
-                            
-                            // Calcoliamo il limite di traslazione
-                            // Margine disponibile = (h * scale - h) / 2
-                            const maxTranslation = (h * (scale - 1)) / 2;
-                            
-                            // Clampiamo il valore per assicurarci che non esca mai dai bordi
-                            // Buffer di 1px per sicurezza
-                            const safeLimit = maxTranslation - 1;
-                            
-                            if (translateY > safeLimit) translateY = safeLimit;
-                            if (translateY < -safeLimit) translateY = -safeLimit;
-                            
-                            // Applichiamo la trasformazione
-                            img.style.transform = `translateY(${translateY}px) scale(${scale})`;
-                        }
-                    });
-                    ticking = false;
-                });
+                window.requestAnimationFrame(updateParallax);
                 ticking = true;
             }
         });
+
+        updateParallax();
     }
 
     function setupNav() {
         const nav = document.getElementById('main-nav');
         const projectNav = document.getElementById('project-nav');
-        
-        // Gestione Nav Principale
+
         if (nav) {
             const logo = document.getElementById('nav-logo');
             const menuBtn = document.getElementById('menu-btn');
@@ -158,19 +128,21 @@ document.addEventListener("DOMContentLoaded", function() {
             let isMenuOpen = false;
 
             const updateNavState = () => {
-                const isScrolled = window.scrollY > 20;
-                const showTransparentNav = isHomePage && !isScrolled && !isMenuOpen;
+                if (isMenuOpen) return;
+                const isScrolled = window.scrollY > 50;
 
-                nav.className = `fixed top-0 w-full z-50 transition-all duration-500 ease-in-out px-6 md:px-12 py-4 flex justify-between items-center`;
-
-                if (showTransparentNav) {
-                    nav.classList.add('bg-transparent', 'text-white');
-                    nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'text-black');
-                    if (logo) logo.classList.add('brightness-0', 'invert');
+                if (isHomePage) {
+                    if (isScrolled) {
+                        nav.classList.remove('bg-transparent', 'text-white', 'py-6');
+                        nav.classList.add('glass-nav', 'text-black', 'py-4', 'shadow-sm');
+                        if (logo) logo.classList.remove('brightness-0', 'invert');
+                    } else {
+                        nav.classList.add('bg-transparent', 'text-white', 'py-6');
+                        nav.classList.remove('glass-nav', 'text-black', 'py-4', 'shadow-sm');
+                        if (logo) logo.classList.add('brightness-0', 'invert');
+                    }
                 } else {
-                    nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'text-black');
-                    nav.classList.remove('bg-transparent', 'text-white');
-                    if (logo) logo.classList.remove('brightness-0', 'invert');
+                    nav.classList.add('glass-nav', 'text-black', 'py-4');
                 }
             };
 
@@ -186,17 +158,21 @@ document.addEventListener("DOMContentLoaded", function() {
                         void mobileMenu.offsetWidth;
                         mobileMenu.classList.remove('translate-x-full');
 
-                        nav.classList.add('bg-white/95', 'backdrop-blur-md', 'text-black');
                         nav.classList.remove('bg-transparent', 'text-white');
+                        nav.classList.add('text-black');
                         if (logo) logo.classList.remove('brightness-0', 'invert');
+
+                        menuSpans.forEach(s => { s.classList.add('bg-black'); s.classList.remove('bg-white'); });
 
                     } else {
                         mobileMenu.classList.add('translate-x-full');
                         document.body.style.overflow = '';
-                        setTimeout(() => {
-                            if(!isMenuOpen) mobileMenu.classList.add('hidden');
-                        }, 500);
+                        setTimeout(() => mobileMenu.classList.add('hidden'), 500);
+
                         updateNavState();
+                        if(isHomePage && window.scrollY < 50) {
+                            menuSpans.forEach(s => { s.classList.add('bg-white'); s.classList.remove('bg-black'); });
+                        }
                     }
 
                     const [s1, s2, s3] = menuSpans;
@@ -211,7 +187,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 });
 
-                // Chiudi menu al click sui link
                 mobileMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
                         if (isMenuOpen) menuBtn.click();
@@ -219,30 +194,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
             updateNavState();
-            
-            // Active Link Logic
+
             const navLinks = document.querySelectorAll('.nav-link');
-            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
             const currentPath = path.split('/').pop() || 'index.html';
-            
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
                 const cleanHref = href ? href.replace('../', '') : '';
-                if (cleanHref === currentPath) link.classList.add('border-b-2', 'border-current');
-            });
-            
-            mobileNavLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                const cleanHref = href ? href.replace('../', '') : '';
-                if (cleanHref === currentPath) link.classList.add('italic', 'font-bold');
+                if (cleanHref === currentPath) link.classList.add('opacity-50');
             });
         }
-        
-        // Gestione Nav Progetto (Semplificata per mobile)
-        if (projectNav) {
-            // Assicuriamoci che sia visibile e sopra tutto
-            projectNav.style.zIndex = '50';
-        }
+
+        if (projectNav) projectNav.style.zIndex = '50';
     }
 
     function setupProjectAnimations() {
@@ -252,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 card.setAttribute('data-aos', 'fade-up');
             }
             if (!card.hasAttribute('data-aos-delay')) {
-                const delay = 100 + (index % 3) * 150;
+                const delay = 50 + (index % 3) * 100;
                 card.setAttribute('data-aos-delay', delay);
             }
         });
@@ -260,17 +222,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function setupTextRevealAnimation() {
         const textElements = document.querySelectorAll('.reveal-text');
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const delay = parseInt(el.getAttribute('data-delay') || 0);
-
-                    setTimeout(() => {
-                        el.classList.add('reveal-text-anim');
-                    }, delay);
-
+                    setTimeout(() => el.classList.add('reveal-text-anim'), delay);
                     observer.unobserve(el);
                 }
             });
@@ -287,18 +244,12 @@ document.addEventListener("DOMContentLoaded", function() {
         if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
     }
 
-    // --- INIT ---
-    
-    // Rilevamento robusto della sottocartella
     let basePath = '';
     const pathname = window.location.pathname;
-    
-    // Check 1: Path contains /progetti/
+
     if (pathname.indexOf('/progetti/') !== -1) {
         basePath = '../';
-    } 
-    // Check 2: Script src starts with ../
-    else {
+    } else {
         const scripts = document.getElementsByTagName('script');
         for (let i = 0; i < scripts.length; i++) {
             const src = scripts[i].getAttribute('src');

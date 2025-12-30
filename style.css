@@ -1,49 +1,40 @@
-/* style.css - Premium Architecture Edition */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
-/* Importazione Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
-
-/* Variabili CSS */
 :root {
     --font-sans: 'Inter', sans-serif;
     --font-serif: 'Playfair Display', serif;
-    --color-background: #Fdfbf7;
-    --color-text-main: #1c1917;
-    --color-text-muted: #57534e;
-    --color-accent: #a855f7;
-    --transition-fast: 0.3s ease;
-    --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    --color-bg: #Fdfbf7;
+    --color-text: #1c1917;
+    --color-muted: #78716c;
+    --color-dark: #0c0a09;
 }
 
-/* Base */
 html {
     scroll-behavior: smooth;
 }
 
 body {
     font-family: var(--font-sans);
-    background-color: var(--color-background);
-    color: var(--color-text-main);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden; /* Previene scroll orizzontale indesiderato */
+    overflow-x: hidden;
     width: 100%;
 }
 
-/* Finiture */
 ::selection {
-    background-color: #1c1917;
+    background-color: var(--color-dark);
     color: #ffffff;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--color-background);
+    background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
     background-color: #a8a29e;
-    border-radius: 4px;
 }
 
 h1, h2, h3, h4, .serif {
@@ -51,57 +42,67 @@ h1, h2, h3, h4, .serif {
 }
 
 .texture-bg {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-/* Componenti */
-/* Magnetic Button Removed - replaced with standard hover effects */
-.magnetic-btn {
-    display: inline-block;
-    transition: all 0.3s ease;
-    will-change: transform;
-}
-.magnetic-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1);
-}
-
-
-.parallax-container {
-    overflow: hidden;
-    position: relative;
-}
-
-.parallax-img {
-    will-change: transform;
-    transform: scale(1.1);
-    /* Removed transition to prevent parallax jitter/lag */
-}
-
-.parallax-img.parallax-top {
-    transform: scale(1.2);
-}
-
-/* Project Card */
 .project-card {
     position: relative;
     overflow: hidden;
     display: block;
-    transform: translateZ(0); /* Hardware acceleration fix */
+    transform: translateZ(0);
+    background-color: #e5e5e5;
+}
+
+.project-card img,
+.parallax-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.1s linear;
+    will-change: transform;
 }
 
 .project-overlay {
     background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
-    opacity: 0.5;
+    opacity: 0.3;
     transition: opacity 0.5s ease;
 }
 
 .project-card:hover .project-overlay {
-    opacity: 0.7;
+    opacity: 0.5;
+}
+
+.magnetic-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+.magnetic-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--color-dark);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.magnetic-btn:hover {
+    color: white !important;
+    border-color: transparent;
+}
+
+.magnetic-btn:hover::before {
+    width: 100%;
 }
 
 .project-info {
-    transform: translateY(20px);
+    transform: translateY(15px);
     opacity: 0;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -115,6 +116,7 @@ h1, h2, h3, h4, .serif {
     position: relative;
     overflow: hidden;
 }
+
 .line-reveal::after {
     content: '';
     position: absolute;
@@ -126,14 +128,14 @@ h1, h2, h3, h4, .serif {
     transform: translateX(-101%);
     transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
 }
+
 .line-reveal.aos-animate::after {
     transform: translateX(0);
 }
 
-/* Animazioni Testo - FIX */
 .reveal-text-init {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
     transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, opacity;
 }
@@ -143,48 +145,37 @@ h1, h2, h3, h4, .serif {
     transform: translateY(0);
 }
 
-/* Scroll Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    opacity: 0.8;
-    animation: bounce 2s infinite;
-    pointer-events: none;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-    40% {transform: translateX(-50%) translateY(-10px);}
-    60% {transform: translateX(-50%) translateY(-5px);}
-}
-
-/* Utility */
 .hover-lift {
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-block;
 }
+
 .hover-lift:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
 }
 
 .image-zoom {
     overflow: hidden;
 }
+
 .zoom-img {
-    transition: transform 0.7s ease;
-}
-.image-zoom:hover .zoom-img {
-    transform: scale(1.05);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-@media (max-width: 767px) {
-    .desktop-only { display: none !important; }
+.image-zoom:hover .zoom-img {
+    transform: scale(1.08);
 }
-@media (min-width: 768px) {
-    .mobile-only { display: none !important; }
+
+.glass-nav {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+@media (max-width: 768px) {
+    .mobile-hidden { display: none !important; }
 }
