@@ -27,22 +27,30 @@ body {
     color: #ffffff;
 }
 
+/* --- SCROLLBAR PERSONALIZZATA (Più elegante) --- */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px; /* Leggermente più larga per usabilità, ma sottile */
 }
 ::-webkit-scrollbar-track {
-    background: var(--color-bg);
+    background: #f5f5f4; /* Colore pietra chiarissimo */
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #a8a29e;
+    background-color: #d6d3d1; /* Grigio pietra medio */
+    border-radius: 4px;
+    border: 2px solid #f5f5f4; /* Bordo per staccare dal track */
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a29e; /* Più scuro all'hover */
 }
 
 h1, h2, h3, h4, .serif {
     font-family: var(--font-serif), serif;
 }
 
+/* --- TEXTURE SFONDO MIGLIORATA (Effetto Carta Pregiata) --- */
 .texture-bg {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    background-color: var(--color-bg);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
 /* --- GESTIONE CARD E IMMAGINI (MODELLO BASE) --- */
@@ -219,6 +227,16 @@ h1, h2, h3, h4, .serif {
 
 /* --- MOBILE OPTIMIZATIONS --- */
 @media (max-width: 768px) {
+    /* Tipografia Mobile più bilanciata */
+    h1 {
+        font-size: 3rem !important; /* Ridotto da 5xl/7xl per evitare a capo brutti */
+        line-height: 1.1 !important;
+    }
+
+    h2 {
+        font-size: 2.25rem !important; /* Ridotto per armonia */
+    }
+
     /* Show project info on mobile by default */
     .project-info {
         transform: translateY(0);
@@ -235,6 +253,12 @@ h1, h2, h3, h4, .serif {
     }
 
     .mobile-hidden { display: none !important; }
+
+    /* Miglioramento padding mobile */
+    section {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
 }
 
 @keyframes scroll-anim {

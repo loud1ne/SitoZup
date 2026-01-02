@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateCopyrightYear();
         // setupMobileProjectCards rimossa perché ora i titoli sono sempre visibili su mobile
         setupProjectNavScroll();
+        setupCookieBanner();
 
         setTimeout(() => {
             if (typeof AOS !== 'undefined') {
@@ -74,6 +75,59 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             setupTextRevealAnimation();
         }, 150);
+    }
+
+    function loadGoogleAnalytics() {
+        // Evita di caricare due volte
+        if (document.getElementById('ga-script')) return;
+
+        const gaId = 'G-XSYWT4G6T5';
+        
+        const script = document.createElement('script');
+        script.id = 'ga-script';
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+        
+        console.log('Google Analytics caricato (Consenso accordato).');
+    }
+
+    function setupCookieBanner() {
+        const banner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const rejectBtn = document.getElementById('cookie-reject');
+        
+        if (!banner || !acceptBtn || !rejectBtn) return;
+
+        // Controlla se l'utente ha già fatto una scelta
+        const cookieConsent = localStorage.getItem('cookieConsent');
+
+        if (cookieConsent === 'accepted') {
+            // Se ha già accettato in passato, carica subito Analytics
+            loadGoogleAnalytics();
+        } else if (!cookieConsent) {
+            // Mostra il banner dopo un breve ritardo se non c'è scelta
+            setTimeout(() => {
+                banner.classList.remove('translate-y-full');
+            }, 2000);
+        }
+
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            banner.classList.add('translate-y-full');
+            loadGoogleAnalytics(); // Carica Analytics ora
+        });
+
+        rejectBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'rejected');
+            banner.classList.add('translate-y-full');
+            console.log('Cookie rifiutati: Analytics bloccato.');
+        });
     }
 
     function setupNav() {
