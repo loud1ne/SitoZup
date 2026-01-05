@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
     <title>Palazzo Aurora | Zuppardo Costruzioni</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏗️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,6 +16,7 @@
 <div class="relative w-full aspect-[4/3] md:aspect-[21/9] bg-stone-800 overflow-hidden">
     <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1200&auto=format&fit=crop"
          class="cover-img"
+         fetchpriority="high"
          alt="Palazzo Aurora">
     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
     <div class="absolute bottom-10 left-6 md:left-20 text-white z-10" data-aos="fade-up" data-aos-delay="300">
@@ -62,15 +63,15 @@
 
     <div class="grid md:grid-cols-2 gap-4">
         <div class="aspect-[3/4] bg-stone-200 overflow-hidden relative image-zoom" data-aos="fade-up">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop" class="zoom-img" alt="Uffici Open Space">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop" class="zoom-img" loading="lazy" alt="Uffici Open Space">
         </div>
 
         <div class="flex flex-col gap-4 h-full">
             <div class="aspect-[3/2] bg-stone-200 overflow-hidden relative image-zoom w-full" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop" class="zoom-img" alt="Facciata Vetro">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop" class="zoom-img" loading="lazy" alt="Facciata Vetro">
             </div>
             <div class="aspect-[3/2] bg-stone-200 overflow-hidden relative image-zoom w-full" data-aos="fade-up" data-aos-delay="200">
-                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1200&auto=format&fit=crop" class="zoom-img" alt="Dettaglio Interni">
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1200&auto=format&fit=crop" class="zoom-img" loading="lazy" alt="Dettaglio Interni">
             </div>
         </div>
     </div>

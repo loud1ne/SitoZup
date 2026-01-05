@@ -27,33 +27,30 @@ body {
     color: #ffffff;
 }
 
-/* --- SCROLLBAR PERSONALIZZATA (Più elegante) --- */
 ::-webkit-scrollbar {
-    width: 8px; /* Leggermente più larga per usabilità, ma sottile */
+    width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #f5f5f4; /* Colore pietra chiarissimo */
+    background: #f5f5f4;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #d6d3d1; /* Grigio pietra medio */
+    background-color: #d6d3d1;
     border-radius: 4px;
-    border: 2px solid #f5f5f4; /* Bordo per staccare dal track */
+    border: 2px solid #f5f5f4;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #a8a29e; /* Più scuro all'hover */
+    background-color: #a8a29e;
 }
 
 h1, h2, h3, h4, .serif {
     font-family: var(--font-serif), serif;
 }
 
-/* --- TEXTURE SFONDO MIGLIORATA (Effetto Carta Pregiata) --- */
 .texture-bg {
     background-color: var(--color-bg);
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* --- GESTIONE CARD E IMMAGINI (MODELLO BASE) --- */
 .project-card {
     position: relative;
     overflow: hidden;
@@ -61,17 +58,15 @@ h1, h2, h3, h4, .serif {
     background-color: #e5e5e5;
 }
 
-/* Regola universale per le immagini di copertina: centrate e riempitive */
 .cover-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;           /* Riempie il box senza deformarsi */
-    object-position: center;     /* Il soggetto è sempre al centro */
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Movimento fluido solo all'hover */
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     display: block;
 }
 
-/* Effetto Hover semplice: leggero zoom quando passi sopra col mouse */
 .project-card:hover .cover-img {
     transform: scale(1.03);
 }
@@ -100,7 +95,6 @@ h1, h2, h3, h4, .serif {
     opacity: 1;
 }
 
-/* --- ELEMENTI UI GENERICI --- */
 .magnetic-btn {
     position: relative;
     overflow: hidden;
@@ -175,7 +169,6 @@ h1, h2, h3, h4, .serif {
     transform: translateY(-8px);
 }
 
-/* Zoom immagini dettagli interni */
 .image-zoom {
     overflow: hidden;
 }
@@ -199,7 +192,6 @@ h1, h2, h3, h4, .serif {
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-/* --- MOBILE MENU ANIMATIONS --- */
 .mobile-nav-link {
     opacity: 0;
     transform: translateY(20px);
@@ -211,10 +203,10 @@ h1, h2, h3, h4, .serif {
     transform: translateY(0);
 }
 
-#mobile-menu.open .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
-#mobile-menu.open .mobile-nav-link:nth-child(2) { transition-delay: 0.2s; }
-#mobile-menu.open .mobile-nav-link:nth-child(3) { transition-delay: 0.3s; }
-#mobile-menu.open .mobile-nav-link:nth-child(4) { transition-delay: 0.4s; }
+#mobile-menu.open .mobile-nav-link:nth-child(2) { transition-delay: 0.1s; }
+#mobile-menu.open .mobile-nav-link:nth-child(3) { transition-delay: 0.2s; }
+#mobile-menu.open .mobile-nav-link:nth-child(4) { transition-delay: 0.3s; }
+#mobile-menu.open .mobile-nav-link:nth-child(5) { transition-delay: 0.4s; }
 
 .mobile-nav-footer {
     opacity: 0;
@@ -225,27 +217,39 @@ h1, h2, h3, h4, .serif {
     opacity: 1;
 }
 
-/* --- MOBILE OPTIMIZATIONS --- */
 @media (max-width: 768px) {
-    /* Tipografia Mobile più bilanciata */
     h1 {
-        font-size: 3rem !important; /* Ridotto da 5xl/7xl per evitare a capo brutti */
+        font-size: clamp(2.5rem, 10vw, 3.5rem) !important;
         line-height: 1.1 !important;
+        word-break: break-word;
+        hyphens: auto;
     }
 
     h2 {
-        font-size: 2.25rem !important; /* Ridotto per armonia */
+        font-size: clamp(2rem, 8vw, 2.5rem) !important;
     }
 
-    /* Show project info on mobile by default */
+    p {
+        font-size: 1.05rem !important;
+        line-height: 1.6 !important;
+    }
+
+    section {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+
+    .magnetic-btn:hover,
+    .project-card:hover .cover-img,
+    .image-zoom:hover .zoom-img {
+        transform: none !important;
+    }
+
     .project-info {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    /* Ensure overlay is visible on mobile for text readability */
-    .project-overlay {
-        opacity: 0.6;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%);
+        padding-bottom: 2rem;
     }
 
     .cover-img {
@@ -254,10 +258,19 @@ h1, h2, h3, h4, .serif {
 
     .mobile-hidden { display: none !important; }
 
-    /* Miglioramento padding mobile */
-    section {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
+    .project-overlay {
+        opacity: 0.6;
+    }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+    nav {
+        padding-top: max(1rem, env(safe-area-inset-top));
+        padding-left: max(1.5rem, env(safe-area-inset-left));
+        padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+    footer {
+        padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
     }
 }
 

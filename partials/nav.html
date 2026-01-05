@@ -30,14 +30,15 @@
     </button>
 </nav>
 
-<div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] z-[90] bg-[#Fdfbf7] text-black flex flex-col items-center justify-center space-y-8 text-4xl serif transform translate-x-full transition-transform duration-500 hidden overflow-y-auto overscroll-none">
-    <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none bg-[url('../assets/images/logozuppardo.png')] bg-no-repeat bg-center bg-contain grayscale"></div>
-    <a href="../index.html" class="mobile-nav-link hover:italic transition-all relative z-10">Home</a>
-    <a href="../progetti.html" class="mobile-nav-link hover:italic transition-all relative z-10">Progetti</a>
-    <a href="../servizi.html" class="mobile-nav-link hover:italic transition-all relative z-10">Servizi</a>
-    <a href="../contatti.html" class="mobile-nav-link hover:italic transition-all relative z-10">Contatti</a>
+<div id="mobile-menu" class="fixed inset-0 z-[90] bg-[#Fdfbf7] text-black flex flex-col items-center justify-center space-y-6 text-4xl serif transform translate-x-full transition-transform duration-500 hidden overflow-y-auto overscroll-none h-[100dvh] w-screen">
+    <div class="absolute inset-0 w-full h-full opacity-5 pointer-events-none bg-[url('../assets/images/logozuppardo.png')] bg-no-repeat bg-center bg-contain grayscale"></div>
 
-    <div class="absolute bottom-12 left-0 w-full text-center">
+    <a href="../index.html" class="mobile-nav-link block py-2 px-8 active:scale-95 transition-transform relative z-10 text-center w-full">Home</a>
+    <a href="../progetti.html" class="mobile-nav-link block py-2 px-8 active:scale-95 transition-transform relative z-10 text-center w-full">Progetti</a>
+    <a href="../servizi.html" class="mobile-nav-link block py-2 px-8 active:scale-95 transition-transform relative z-10 text-center w-full">Servizi</a>
+    <a href="../contatti.html" class="mobile-nav-link block py-2 px-8 active:scale-95 transition-transform relative z-10 text-center w-full">Contatti</a>
+
+    <div class="absolute bottom-10 left-0 w-full text-center pb-safe">
         <p class="text-xs uppercase tracking-widest text-stone-400 font-sans mobile-nav-footer">Est. 1985 • Sicilia</p>
     </div>
 </div>

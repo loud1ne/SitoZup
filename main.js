@@ -19,15 +19,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         return val;
                     }
 
-                    // If we are in a subdirectory (basePath == '../')
                     if (basePath === '../') {
-                        if (val.startsWith('../')) return val; // Already correct relative to root
-                        return '../' + val; // Add ../ to make it relative to root
+                        if (val.startsWith('../')) return val;
+                        return '../' + val;
                     }
-                    // If we are in root (basePath == '')
                     else {
-                        if (val.startsWith('../')) return val.substring(3); // Remove ../ to make it relative to current file
-                        return val; // Already correct
+                        if (val.startsWith('../')) return val.substring(3);
+                        return val;
                     }
                 };
 
@@ -55,10 +53,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function initializeSite() {
         setupNav();
-        // setupParallax rimossa per stabilità
         setupProjectAnimations();
         updateCopyrightYear();
-        // setupMobileProjectCards rimossa perché ora i titoli sono sempre visibili su mobile
         setupProjectNavScroll();
         setupCookieBanner();
 
@@ -78,11 +74,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function loadGoogleAnalytics() {
-        // Evita di caricare due volte
         if (document.getElementById('ga-script')) return;
 
         const gaId = 'G-XSYWT4G6T5';
-        
+
         const script = document.createElement('script');
         script.id = 'ga-script';
         script.async = true;
@@ -93,25 +88,20 @@ document.addEventListener("DOMContentLoaded", function() {
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', gaId);
-        
-        console.log('Google Analytics caricato (Consenso accordato).');
     }
 
     function setupCookieBanner() {
         const banner = document.getElementById('cookie-banner');
         const acceptBtn = document.getElementById('cookie-accept');
         const rejectBtn = document.getElementById('cookie-reject');
-        
+
         if (!banner || !acceptBtn || !rejectBtn) return;
 
-        // Controlla se l'utente ha già fatto una scelta
         const cookieConsent = localStorage.getItem('cookieConsent');
 
         if (cookieConsent === 'accepted') {
-            // Se ha già accettato in passato, carica subito Analytics
             loadGoogleAnalytics();
         } else if (!cookieConsent) {
-            // Mostra il banner dopo un breve ritardo se non c'è scelta
             setTimeout(() => {
                 banner.classList.remove('translate-y-full');
             }, 2000);
@@ -120,13 +110,12 @@ document.addEventListener("DOMContentLoaded", function() {
         acceptBtn.addEventListener('click', () => {
             localStorage.setItem('cookieConsent', 'accepted');
             banner.classList.add('translate-y-full');
-            loadGoogleAnalytics(); // Carica Analytics ora
+            loadGoogleAnalytics();
         });
 
         rejectBtn.addEventListener('click', () => {
             localStorage.setItem('cookieConsent', 'rejected');
             banner.classList.add('translate-y-full');
-            console.log('Cookie rifiutati: Analytics bloccato.');
         });
     }
 
@@ -173,9 +162,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (isMenuOpen) {
                         mobileMenu.classList.remove('hidden');
                         document.body.style.overflow = 'hidden';
+                        document.body.style.touchAction = 'none';
                         void mobileMenu.offsetWidth;
                         mobileMenu.classList.remove('translate-x-full');
-                        mobileMenu.classList.add('open'); // Trigger CSS animations
+                        mobileMenu.classList.add('open');
 
                         nav.classList.remove('bg-transparent', 'text-white');
                         nav.classList.add('text-black');
@@ -187,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         mobileMenu.classList.remove('open');
                         mobileMenu.classList.add('translate-x-full');
                         document.body.style.overflow = '';
+                        document.body.style.touchAction = '';
                         setTimeout(() => mobileMenu.classList.add('hidden'), 500);
 
                         updateNavState();
@@ -220,22 +211,18 @@ document.addEventListener("DOMContentLoaded", function() {
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
                 const cleanHref = href ? href.replace('../', '') : '';
-                
-                // Rimuovi la classe opacity-50 precedente
+
                 link.classList.remove('opacity-50');
-                
-                // Aggiungi la classe active se è la pagina corrente
+
                 if (cleanHref === currentPath) {
                     link.classList.add('active-nav-link');
-                    // Per i link con underline animation, forza la larghezza al 100%
                     const underline = link.querySelector('span.absolute');
                     if (underline) {
                         underline.classList.remove('scale-x-0');
                         underline.classList.add('scale-x-100');
                     }
-                    // Per il bottone Contattaci, magari cambia stile
                     if (link.textContent.trim() === 'Contattaci') {
-                         link.classList.add('bg-stone-900', 'text-white', 'border-transparent');
+                        link.classList.add('bg-stone-900', 'text-white', 'border-transparent');
                     }
                 }
             });
@@ -283,33 +270,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function setupProjectNavScroll() {
         const navTitle = document.getElementById('nav-project-title');
-        // Cerca l'immagine principale del progetto (la prima immagine grande)
-        // Assumiamo che sia in un div con classe relativa all'inizio del body o simile
-        // In villa-orizzonte.html è: <div class="relative w-full aspect-[4/3] ..."> <img ... class="cover-img">
-        
-        // Cerchiamo l'h1 del progetto per prendere il titolo se serve, o usiamo quello hardcoded
         const projectTitleH1 = document.querySelector('h1');
-        
+
         if (navTitle && projectTitleH1) {
-            // Aggiorna il testo del nav con il titolo del progetto
             navTitle.textContent = projectTitleH1.textContent;
-            
-            // L'elemento che deve uscire dalla viewport per far apparire il titolo
-            // Usiamo il contenitore dell'immagine principale
-            const heroImageContainer = projectTitleH1.closest('.relative'); 
-            
+
+            const heroImageContainer = projectTitleH1.closest('.relative');
+
             if (heroImageContainer) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (!entry.isIntersecting) {
-                            // L'immagine non è più visibile -> Mostra titolo nella nav
                             navTitle.classList.remove('opacity-0');
                         } else {
-                            // L'immagine è visibile -> Nascondi titolo nella nav
                             navTitle.classList.add('opacity-0');
                         }
                     });
-                }, { threshold: 0, rootMargin: "-60px 0px 0px 0px" }); // Offset per la navbar
+                }, { threshold: 0, rootMargin: "-60px 0px 0px 0px" });
 
                 observer.observe(heroImageContainer);
             }
