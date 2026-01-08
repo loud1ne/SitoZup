@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
-    <title>Costruzioni Zuppardo | Impresa Edile in Sicilia dal 1985</title>
+    <title>Costruzioni Zuppardo | Impresa Edile in Sicilia</title>
     <meta name="description" content="Costruzioni Zuppardo: eccellenza nell'edilizia residenziale e commerciale in Sicilia. Dal 1985 realizziamo ville, appartamenti e ristrutturazioni di pregio.">
     <meta name="keywords" content="costruzioni zuppardo, impresa edile sicilia, costruzioni edili, ristrutturazioni, ville di lusso, appartamenti, vendita case sicilia">
     <meta name="author" content="Costruzioni Zuppardo">
@@ -12,13 +12,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.costruzionizuppardo.it/">
     <meta property="og:title" content="Costruzioni Zuppardo | Impresa Edile in Sicilia">
-    <meta property="og:description" content="Dal 1985 costruiamo il futuro con passione e qualità. Scopri i nostri progetti immobiliari in Sicilia.">
+    <meta property="og:description" content="Costruiamo il futuro con passione e qualità. Scopri i nostri progetti immobiliari in Sicilia.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1200&auto=format&fit=crop">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.costruzionizuppardo.it/">
     <meta property="twitter:title" content="Costruzioni Zuppardo | Impresa Edile in Sicilia">
-    <meta property="twitter:description" content="Dal 1985 costruiamo il futuro con passione e qualità. Scopri i nostri progetti immobiliari in Sicilia.">
+    <meta property="twitter:description" content="Costruiamo il futuro con passione e qualità. Scopri i nostri progetti immobiliari in Sicilia.">
     <meta property="twitter:image" content="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1200&auto=format&fit=crop">
 
     <link rel="canonical" href="https://www.costruzionizuppardo.it/">
@@ -37,6 +37,7 @@
             "@type": "ConstructionBusiness",
             "name": "Costruzioni Zuppardo",
             "image": "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1920&auto=format&fit=crop",
+            "logo": "https://www.costruzionizuppardo.it/assets/images/logozuppardo.png",
             "@id": "https://www.costruzionizuppardo.it",
             "url": "https://www.costruzionizuppardo.it",
             "telephone": "+39 347 926 0723",
@@ -66,6 +67,57 @@
             }
         }
     </script>
+    <style>
+        .hero-slider {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transform: scale(1);
+            transition: transform 8s linear;
+        }
+        .hero-slide.active img {
+            transform: scale(1.1);
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            display: flex;
+            gap: 0.75rem;
+        }
+        .slider-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .slider-dot.active {
+            background-color: white;
+            transform: scale(1.3);
+        }
+    </style>
 </head>
 <body class="texture-bg">
 
@@ -73,29 +125,47 @@
 
 <main>
     <header class="h-[100dvh] relative flex flex-col justify-center px-6 md:px-20 overflow-hidden">
-        <div class="absolute inset-0 z-0 bg-stone-900">
-            <div class="absolute inset-0 bg-black/30 z-10"></div>
-            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1920&auto=format&fit=crop"
-                 class="w-full h-full object-cover object-center opacity-0 transition-opacity duration-1000 animate-slow-zoom"
-                 onload="this.classList.remove('opacity-0')"
-                 fetchpriority="high"
-                 alt="Villa moderna realizzata da Costruzioni Zuppardo">
+        <div class="hero-slider" id="hero-slider">
+            <div class="hero-slide active">
+                <div class="absolute inset-0 bg-black/40 z-10"></div>
+                <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1920&auto=format&fit=crop"
+                     alt="Villa moderna realizzata da Costruzioni Zuppardo">
+            </div>
+            <div class="hero-slide">
+                <div class="absolute inset-0 bg-black/40 z-10"></div>
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop"
+                     alt="Villa Orizzonte">
+            </div>
+            <div class="hero-slide">
+                <div class="absolute inset-0 bg-black/40 z-10"></div>
+                <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop"
+                     alt="Casale dei Venti">
+            </div>
+            <div class="hero-slide">
+                <div class="absolute inset-0 bg-black/40 z-10"></div>
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200&auto=format&fit=crop"
+                     alt="Villa Marina">
+            </div>
         </div>
 
-        <div class="relative z-20 max-w-screen-2xl mx-auto w-full text-white mt-0 md:mt-0 pt-20 md:pt-0">
-            <div class="overflow-hidden mb-6 flex items-center gap-4">
+        <div class="slider-dots" id="slider-dots">
+            <!-- Dots will be generated by JS -->
+        </div>
+
+        <div class="relative z-20 max-w-screen-2xl mx-auto w-full text-white mt-0 md:mt-0 pt-20 md:pt-0 pointer-events-none">
+            <div class="overflow-hidden mb-6 flex items-center gap-4 pointer-events-auto">
                 <div class="h-px w-8 bg-white/60"></div>
                 <p class="tracking-[0.4em] uppercase text-[10px] md:text-xs font-medium reveal-text" data-delay="100">Est. 1985 • Sicilia</p>
             </div>
 
             <h1 class="sr-only">Costruzioni Zuppardo - Impresa Edile e Ristrutturazioni Sicilia</h1>
 
-            <div class="text-5xl sm:text-7xl md:text-[7rem] lg:text-[8.5rem] leading-[0.9] mb-12 font-serif text-white">
+            <div class="text-5xl sm:text-7xl md:text-[7rem] lg:text-[8.5rem] leading-[0.9] mb-12 font-serif text-white pointer-events-auto">
                 <span class="block reveal-text" data-delay="300">Costruire</span>
                 <span class="block italic font-light reveal-text text-white/90" data-delay="500">l'Eterno.</span>
             </div>
 
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12" data-aos="fade-up" data-aos-delay="800">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12 pointer-events-auto" data-aos="fade-up" data-aos-delay="800">
                 <a href="progetti.html" class="magnetic-btn border border-white/40 hover:border-white bg-white/5 text-white backdrop-blur-sm px-10 py-5 text-[11px] font-bold uppercase tracking-[0.2em] transition-all">
                     Esplora i Lavori
                 </a>
@@ -105,7 +175,7 @@
             </div>
         </div>
 
-        <div class="scroll-indicator text-white absolute bottom-8 right-6 md:left-20 md:right-auto z-20 flex flex-col items-center md:items-start">
+        <div class="scroll-indicator text-white absolute bottom-8 right-6 md:left-20 md:right-auto z-20 flex flex-col items-center md:items-start pointer-events-auto">
             <span class="text-[9px] uppercase tracking-widest mb-3 opacity-70">Scroll</span>
             <div class="w-px h-12 bg-white/20 overflow-hidden">
                 <div class="w-full h-full bg-white scroll-line-anim"></div>
@@ -137,11 +207,105 @@
             </div>
         </div>
     </section>
+
+    <!-- Sezione Progetti in Evidenza -->
+    <section class="py-20 px-6 md:px-20 max-w-screen-2xl mx-auto bg-[#Fdfbf7]">
+        <div class="flex justify-between items-end mb-16">
+            <div>
+                <span class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-4 block">Portfolio</span>
+                <h2 class="text-3xl md:text-5xl serif">Progetti Recenti</h2>
+            </div>
+            <a href="progetti.html" class="hidden md:inline-flex items-center text-xs font-bold uppercase tracking-widest text-black hover:text-stone-500 transition-colors border-b border-black pb-1 hover:border-stone-500">
+                Vedi tutti
+                <span class="ml-2">→</span>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Progetto 1 -->
+            <a href="progetti/villa-orizzonte.html" class="group block" data-aos="fade-up" data-aos-delay="0">
+                <div class="relative overflow-hidden aspect-[4/5] mb-4 bg-stone-200">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         alt="Villa Orizzonte">
+                </div>
+                <h3 class="text-xl serif mb-1 group-hover:text-stone-600 transition-colors">Villa Orizzonte</h3>
+                <p class="text-xs uppercase tracking-widest text-stone-400">Residenziale</p>
+            </a>
+
+            <!-- Progetto 2 -->
+            <a href="progetti/casale-dei-venti.html" class="group block" data-aos="fade-up" data-aos-delay="100">
+                <div class="relative overflow-hidden aspect-[4/5] mb-4 bg-stone-200">
+                    <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=800&auto=format&fit=crop"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         alt="Casale dei Venti">
+                </div>
+                <h3 class="text-xl serif mb-1 group-hover:text-stone-600 transition-colors">Casale dei Venti</h3>
+                <p class="text-xs uppercase tracking-widest text-stone-400">Restauro</p>
+            </a>
+
+            <!-- Progetto 3 -->
+            <a href="progetti/residenza-luce.html" class="group block" data-aos="fade-up" data-aos-delay="200">
+                <div class="relative overflow-hidden aspect-[4/5] mb-4 bg-stone-200">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         alt="Residenza Luce">
+                </div>
+                <h3 class="text-xl serif mb-1 group-hover:text-stone-600 transition-colors">Residenza Luce</h3>
+                <p class="text-xs uppercase tracking-widest text-stone-400">Complesso Residenziale</p>
+            </a>
+        </div>
+
+        <div class="mt-12 text-center md:hidden">
+            <a href="progetti.html" class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-black hover:text-stone-500 transition-colors border-b border-black pb-1 hover:border-stone-500">
+                Vedi tutti i progetti
+                <span class="ml-2">→</span>
+            </a>
+        </div>
+    </section>
+
 </main>
 
 <div id="footer-placeholder"></div>
 
 <script src="vendor/aos/aos.js"></script>
 <script src="main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dotsContainer = document.getElementById('slider-dots');
+        let currentSlide = 0;
+        const slideInterval = 5000; // 5 secondi
+
+        // Crea i dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('slider-dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.slider-dot');
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        let slideTimer = setInterval(nextSlide, slideInterval);
+
+        // Ferma il timer quando l'utente interagisce con i dots
+        dotsContainer.addEventListener('mouseenter', () => clearInterval(slideTimer));
+        dotsContainer.addEventListener('mouseleave', () => slideTimer = setInterval(nextSlide, slideInterval));
+    });
+</script>
 </body>
 </html>

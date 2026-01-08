@@ -3,13 +3,13 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&amp;display=swap');
         </style>
-        <radialGradient id="lightBeam" cx="50%" cy="0%" r="70%" fx="50%" fy="0%">
+        <radialGradient id="lightBeam" cx="50%" cy="0%" r="50%" fx="50%" fy="0%">
             <stop offset="0%" style="stop-color:#Fdfbf7;stop-opacity:0.8" />
             <stop offset="100%" style="stop-color:#Fdfbf7;stop-opacity:0" />
         </radialGradient>
     </defs>
 
-    <text x="60%" y="65%"
+    <text x="50%" y="50%"
           font-family="'Playfair Display', serif"
           font-weight="900"
           font-style="italic"
