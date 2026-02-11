@@ -3,21 +3,17 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&amp;display=swap');
         </style>
-        <radialGradient id="lightBeam" cx="50%" cy="0%" r="50%" fx="50%" fy="0%">
-            <stop offset="0%" style="stop-color:#Fdfbf7;stop-opacity:0.8" />
-            <stop offset="100%" style="stop-color:#Fdfbf7;stop-opacity:0" />
-        </radialGradient>
     </defs>
-
-    <text x="50%" y="50%"
+    <circle cx="256" cy="256" r="256" fill="black"/>
+    <text x="50%" y="54%"
           font-family="'Playfair Display', serif"
           font-weight="900"
           font-style="italic"
-          font-size="450"
+          font-size="300"
           fill="#Fdfbf7"
           text-anchor="middle"
           dominant-baseline="middle"
-    style="filter: drop-shadow(0 0 20px rgba(253, 251, 247, 0.5));">
+          style="filter: drop-shadow(0 0 15px rgba(253, 251, 247, 0.4));">
     Z
-</text>
-        </svg>
+    </text>
+</svg>

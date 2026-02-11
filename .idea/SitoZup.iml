@@ -6,5 +6,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="aos" level="application" />
+    <orderEntry type="library" name="55dce873-8aff-40e0-8564-ed38cdfe0681" level="application" />
   </component>
 </module>

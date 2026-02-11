@@ -11,6 +11,9 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -18,8 +21,10 @@ body {
     background-color: var(--color-bg);
     color: var(--color-text);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     width: 100%;
+    text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -27,6 +32,7 @@ body {
     color: #ffffff;
 }
 
+/* Custom Scrollbar - Mainly for Desktop */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -56,6 +62,8 @@ h1, h2, h3, h4, .serif {
     overflow: hidden;
     display: block;
     background-color: #e5e5e5;
+    /* Fix for Safari border-radius overflow */
+    transform: translateZ(0);
 }
 
 .cover-img {
@@ -65,6 +73,7 @@ h1, h2, h3, h4, .serif {
     object-position: center;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     display: block;
+    will-change: transform;
 }
 
 .project-card:hover .cover-img {
@@ -88,6 +97,7 @@ h1, h2, h3, h4, .serif {
     transform: translateY(20px);
     opacity: 0;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
 }
 
 .project-card:hover .project-info {
@@ -100,6 +110,8 @@ h1, h2, h3, h4, .serif {
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1;
+    /* Better touch target handling */
+    touch-action: manipulation;
 }
 
 .magnetic-btn::before {
@@ -231,6 +243,7 @@ h1, h2, h3, h4, .serif {
     opacity: 1;
 }
 
+/* Mobile Optimizations */
 @media (max-width: 768px) {
     h1 {
         font-size: clamp(2.5rem, 11vw, 4rem) !important;
@@ -241,11 +254,55 @@ h1, h2, h3, h4, .serif {
         font-size: clamp(1.8rem, 8vw, 2.5rem) !important;
     }
 
+    /* Ensure project info is visible on mobile without hover */
     .project-info {
         opacity: 1 !important;
         transform: translateY(0) !important;
-        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+        /* Stronger gradient for better readability on mobile */
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
         padding-bottom: 2rem;
+        padding-top: 4rem;
+    }
+
+    /* Hide scrollbar on mobile for cleaner look */
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+    }
+
+    /* Improve tap targets */
+    a, button {
+        touch-action: manipulation;
+    }
+
+    /* Improve spacing on mobile */
+    section {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    /* Better mobile typography */
+    p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Adjust hero slider text for mobile */
+    .hero-slider + div h1 {
+        margin-bottom: 2rem !important;
+    }
+
+    .hero-slider + div .text-5xl {
+        font-size: 3.5rem !important;
+    }
+
+    /* Adjust mobile menu spacing */
+    #mobile-menu nav {
+        gap: 2rem !important;
+    }
+
+    .mobile-nav-link {
+        font-size: 2.5rem !important;
     }
 }
 
@@ -295,6 +352,7 @@ h1, h2, h3, h4, .serif {
     object-position: center;
     transform: scale(1);
     transition: transform 8s linear;
+    will-change: transform;
 }
 .hero-slide.active img {
     transform: scale(1.1);
@@ -307,6 +365,8 @@ h1, h2, h3, h4, .serif {
     z-index: 30;
     display: flex;
     gap: 0.75rem;
+    /* Ensure dots are above safe area */
+    padding-bottom: env(safe-area-inset-bottom);
 }
 .slider-dot {
     width: 0.5rem;
@@ -315,6 +375,16 @@ h1, h2, h3, h4, .serif {
     background-color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
     transition: all 0.3s ease;
+    /* Increase hit area */
+    position: relative;
+}
+.slider-dot::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
 }
 .slider-dot.active {
     background-color: white;

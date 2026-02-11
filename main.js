@@ -58,14 +58,23 @@ document.addEventListener("DOMContentLoaded", function() {
         setupProjectNavScroll();
         setupCookieBanner();
 
+        // Initialize AOS with mobile-friendly settings
         setTimeout(() => {
             if (typeof AOS !== 'undefined') {
+                // Mobile optimization: change lateral fades to fade-up to prevent layout issues
+                if (window.innerWidth < 768) {
+                    document.querySelectorAll('[data-aos="fade-left"], [data-aos="fade-right"]').forEach(el => {
+                        el.setAttribute('data-aos', 'fade-up');
+                    });
+                }
+
                 AOS.init({
                     once: true,
-                    duration: 1000,
+                    duration: 800,
                     easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                    offset: 60,
+                    offset: 40,
                     anchorPlacement: 'top-bottom',
+                    disable: false
                 });
                 AOS.refresh();
             }
@@ -136,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const updateNavState = () => {
                 if (isMenuOpen) return;
-                const isScrolled = window.scrollY > 50;
+                const isScrolled = window.scrollY > 20;
 
                 if (isHomePage) {
                     if (isScrolled) {
@@ -153,16 +162,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             };
 
-            window.addEventListener('scroll', updateNavState);
+            window.addEventListener('scroll', updateNavState, { passive: true });
 
             if (menuBtn && mobileMenu) {
-                menuBtn.addEventListener('click', () => {
+                menuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent ghost clicks
                     isMenuOpen = !isMenuOpen;
 
                     if (isMenuOpen) {
                         mobileMenu.classList.remove('hidden');
                         document.body.style.overflow = 'hidden';
                         document.body.style.touchAction = 'none';
+                        // Force reflow
                         void mobileMenu.offsetWidth;
                         mobileMenu.classList.remove('translate-x-full');
                         mobileMenu.classList.add('open');
@@ -178,10 +189,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         mobileMenu.classList.add('translate-x-full');
                         document.body.style.overflow = '';
                         document.body.style.touchAction = '';
-                        setTimeout(() => mobileMenu.classList.add('hidden'), 500);
+                        
+                        setTimeout(() => {
+                            if (!isMenuOpen) mobileMenu.classList.add('hidden');
+                        }, 500);
 
                         updateNavState();
-                        if(isHomePage && window.scrollY < 50) {
+                        if(isHomePage && window.scrollY < 20) {
                             menuSpans.forEach(s => { s.classList.add('bg-white'); s.classList.remove('bg-black'); });
                         }
                     }
@@ -233,12 +247,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function setupProjectAnimations() {
         const projectCards = document.querySelectorAll('.project-card');
+        
+        // Check if we are on mobile
+        const isMobile = window.innerWidth < 768;
+        
         projectCards.forEach((card, index) => {
             if (!card.hasAttribute('data-aos')) {
                 card.setAttribute('data-aos', 'fade-up');
             }
             if (!card.hasAttribute('data-aos-delay')) {
-                const delay = 50 + (index % 3) * 100;
+                // Reduce delay on mobile for snappier feel
+                const delay = isMobile ? 50 : 50 + (index % 3) * 100;
                 card.setAttribute('data-aos-delay', delay.toString());
             }
         });
@@ -246,16 +265,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function setupTextRevealAnimation() {
         const textElements = document.querySelectorAll('.reveal-text');
+        
+        // Use IntersectionObserver for better performance
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const delay = parseInt(el.getAttribute('data-delay') || '0', 10);
-                    setTimeout(() => el.classList.add('reveal-text-anim'), delay);
+                    // Faster animation on mobile
+                    const finalDelay = window.innerWidth < 768 ? Math.min(delay, 200) : delay;
+                    
+                    setTimeout(() => el.classList.add('reveal-text-anim'), finalDelay);
                     observer.unobserve(el);
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }); // Adjusted threshold and margin
 
         textElements.forEach(el => {
             el.classList.add('reveal-text-init');
