@@ -2,172 +2,133 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
-    <title>Galleria | Zuppardo Costruzioni</title>
-    <meta name="description" content="Sfoglia la galleria fotografica delle opere realizzate da Costruzioni Zuppardo. Eccellenza e cura del dettaglio nell'edilizia in Sicilia.">
-    <meta name="keywords" content="galleria costruzioni, portfolio edilizia, foto ville sicilia, ristrutturazioni immagini, Zuppardo Costruzioni">
-    
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Galleria | Zuppardo Costruzioni">
-    <meta property="og:description" content="Sfoglia la nostra galleria fotografica e scopri la qualità delle nostre realizzazioni.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Portfolio di Costruzioni Zuppardo: scopri le nostre realizzazioni. Ville, ristrutturazioni e design d'interni ad Avola, Noto e Siracusa.">
+    <title>Portfolio | Zuppardo Costruzioni</title>
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="alternate icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="vendor/aos/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Lightbox styles */
         .lightbox {
             display: none;
             position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
+            inset: 0;
+            z-index: 9999;
+            background: rgba(12, 10, 9, 0.98);
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
+            cursor: zoom-out;
         }
         .lightbox.active {
             display: flex;
             opacity: 1;
         }
         .lightbox img {
-            max-width: 90%;
+            max-width: 90vw;
             max-height: 90vh;
             object-fit: contain;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            z-index: 1001;
+        .lightbox.active img {
+            transform: scale(1);
+        }
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .masonry-grid { column-count: 2; }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid { column-count: 3; }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 2rem;
         }
     </style>
 </head>
-<body class="texture-bg">
+<body class="texture-bg antialiased">
 
 <div id="main-nav-placeholder"></div>
 
-<header class="pt-32 md:pt-48 pb-16 md:pb-24 px-6 md:px-20 max-w-screen-2xl mx-auto">
-    <div class="max-w-4xl">
-        <span class="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-6 reveal-text" data-delay="0">Portfolio</span>
-        <h1 class="text-5xl md:text-8xl serif leading-[0.9] mb-12 reveal-text" data-delay="200">
-            Galleria<br><span class="italic font-light text-stone-400">Fotografica.</span>
-        </h1>
-        <div class="h-px w-24 bg-black line-reveal" data-aos="fade-right" data-aos-delay="400"></div>
-    </div>
+<header class="pt-48 pb-24 px-6 md:px-20 max-w-screen-2xl mx-auto text-center relative">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-stone-200"></div>
+    <span class="block text-xs font-bold uppercase tracking-[0.3em] text-stone-400 mb-6 reveal-text">Portfolio</span>
+    <h1 class="text-5xl md:text-8xl serif reveal-text leading-tight" data-delay="100">Le nostre <br><span class="italic text-stone-500 font-light">Opere.</span></h1>
 </header>
 
 <section class="px-6 md:px-20 pb-32 max-w-screen-2xl mx-auto">
-    <!-- Masonry Grid -->
-    <div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+    <div class="masonry-grid">
 
-        <!-- Image 1 -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Villa Orizzonte">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="masonry-item relative group overflow-hidden cursor-zoom-in" onclick="openLightbox(this)" data-aos="fade-up">
+            <div class="overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200" class="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" alt="Villa Residenziale">
+            </div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <p class="text-white text-xs uppercase tracking-widest font-bold">Residenziale</p>
+                <p class="text-white/80 text-[10px] uppercase tracking-widest mt-1">Avola, SR</p>
+            </div>
         </div>
 
-        <!-- Image 2 -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="100">
-            <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Casale dei Venti">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="masonry-item relative group overflow-hidden cursor-zoom-in" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="100">
+            <div class="overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200" class="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" alt="Dettaglio Architettonico">
+            </div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <p class="text-white text-xs uppercase tracking-widest font-bold">Dettagli</p>
+            </div>
         </div>
 
-        <!-- Image 3 -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="200">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Residenza Luce">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="masonry-item relative group overflow-hidden cursor-zoom-in" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="200">
+            <div class="overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200" class="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" alt="Esterno Moderno">
+            </div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <p class="text-white text-xs uppercase tracking-widest font-bold">Esterni</p>
+                <p class="text-white/80 text-[10px] uppercase tracking-widest mt-1">Noto, SR</p>
+            </div>
         </div>
 
-        <!-- Image 4 -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up">
-            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Palazzo Aurora">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="masonry-item relative group overflow-hidden cursor-zoom-in" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="100">
+            <div class="overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200" class="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" alt="Interni">
+            </div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <p class="text-white text-xs uppercase tracking-widest font-bold">Interni</p>
+            </div>
         </div>
 
-        <!-- Image 5 -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="100">
-            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Villa Marina">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-
-        <!-- Image 6 (Detail) -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="200">
-            <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Dettaglio Villa">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-
-        <!-- Image 7 (Detail) -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up">
-            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Dettaglio Interni">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-
-        <!-- Image 8 (Detail) -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="100">
-            <img src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Interni Casale">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-
-        <!-- Image 9 (Detail) -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="200">
-            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Facciata Moderna">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-
-        <!-- Image 10 (Detail) -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Uffici">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-
-        <!-- Image 11 (Detail) -->
-        <div class="break-inside-avoid cursor-pointer group relative overflow-hidden" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="100">
-            <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=1200&auto=format&fit=crop"
-                 class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                 alt="Piscina">
-            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="masonry-item relative group overflow-hidden cursor-zoom-in" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="200">
+            <div class="overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200" class="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" alt="Ristrutturazione">
+            </div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <p class="text-white text-xs uppercase tracking-widest font-bold">Ristrutturazione</p>
+                <p class="text-white/80 text-[10px] uppercase tracking-widest mt-1">Siracusa</p>
+            </div>
         </div>
 
     </div>
 </section>
 
-<!-- Lightbox Modal -->
-<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
-    <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
-    <img id="lightbox-img" src="" alt="Full screen image">
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="absolute top-6 right-6 text-white cursor-pointer p-4 hover:text-stone-400 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </div>
+    <img id="lightbox-img" src="" alt="Zoomed Project" onclick="event.stopPropagation()">
 </div>
 
 <div id="footer-placeholder"></div>
@@ -175,33 +136,24 @@
 <script src="vendor/aos/aos.js"></script>
 <script src="main.js"></script>
 <script>
-    function openLightbox(element) {
-        const img = element.querySelector('img');
-        const lightbox = document.getElementById('lightbox');
+    function openLightbox(el) {
+        const img = el.querySelector('img');
         const lightboxImg = document.getElementById('lightbox-img');
-
         lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+
+        const lightbox = document.getElementById('lightbox');
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
-    function closeLightbox(event) {
-        if (event.target !== document.getElementById('lightbox-img')) {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
     }
 
-    // Close on Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
-            const lightbox = document.getElementById('lightbox');
-            if (lightbox.classList.contains('active')) {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
+    document.addEventListener('keydown', e => {
+        if(e.key === "Escape") closeLightbox();
     });
 </script>
 </body>

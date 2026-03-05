@@ -1,33 +1,43 @@
-<footer class="bg-stone-900 text-white pt-20 pb-10 px-6 md:px-20 border-t border-stone-800">
-    <div class="grid md:grid-cols-4 gap-12 mb-16">
-        <div class="col-span-1 md:col-span-2">
-            <div class="mb-6">
-                <img src="../assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-12 md:h-16 w-auto object-contain brightness-0 invert">
+<footer class="bg-stone-900 text-white pt-24 pb-12 px-6 md:px-20 border-t border-stone-800 relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+
+    <div class="grid md:grid-cols-12 gap-12 mb-20 relative z-10">
+        <div class="md:col-span-5">
+            <div class="mb-8">
+                <img src="assets/images/logozuppardo.png" alt="Zuppardo Costruzioni" class="h-12 md:h-16 w-auto object-contain brightness-0 invert opacity-90">
             </div>
-            <p class="text-stone-400 font-light max-w-sm text-sm md:text-base">Costruiamo spazi che sfidano il tempo. Eccellenza, dedizione e innovazione</p>
+            <p class="text-stone-400 font-light max-w-sm text-sm md:text-base leading-relaxed">
+                Costruiamo spazi che sfidano il tempo. Eccellenza, dedizione e innovazione al servizio dell'abitare contemporaneo in Sicilia.
+            </p>
         </div>
-        <div>
-            <h5 class="serif text-xl mb-6 text-white">Navigazione</h5>
-            <ul class="space-y-4 text-stone-400 text-sm">
-                <li><a href="../progetti.html" class="hover:text-white transition-colors">Opere Realizzate</a></li>
-                <li><a href="../servizi.html" class="hover:text-white transition-colors">I Nostri Servizi</a></li>
-                <li><a href="../contatti.html" class="hover:text-white transition-colors">Richiedi Preventivo</a></li>
+
+        <div class="md:col-span-3 md:col-start-7">
+            <h5 class="serif text-xl mb-8 text-white">Esplora</h5>
+            <ul class="space-y-4 text-stone-400 text-sm tracking-wide">
+                <li><a href="progetti.html" class="hover:text-white transition-colors flex items-center group"><span class="w-2 h-[1px] bg-stone-600 mr-3 group-hover:w-4 transition-all"></span>Opere Realizzate</a></li>
+                <li><a href="servizi.html" class="hover:text-white transition-colors flex items-center group"><span class="w-2 h-[1px] bg-stone-600 mr-3 group-hover:w-4 transition-all"></span>I Nostri Servizi</a></li>
+                <li><a href="contatti.html" class="hover:text-white transition-colors flex items-center group"><span class="w-2 h-[1px] bg-stone-600 mr-3 group-hover:w-4 transition-all"></span>Richiedi Preventivo</a></li>
             </ul>
         </div>
-        <div>
-            <h5 class="serif text-xl mb-6 text-white">Contatti</h5>
-            <ul class="space-y-4 text-stone-400 text-sm">
-                <li>Via Lorenzo Bernini 9, Avola (SR)</li>
-                <li><a href="mailto:info@costruzionizuppardo.it" class="hover:text-white transition-colors">info@costruzionizuppardo.it</a></li>
-                <li><a href="tel:+390910000000" class="hover:text-white transition-colors">+39 347 926 0723</a></li>
+
+        <div class="md:col-span-3">
+            <h5 class="serif text-xl mb-8 text-white">Contatti</h5>
+            <ul class="space-y-4 text-stone-400 text-sm tracking-wide">
+                <li class="flex items-start"><span class="block w-20 text-stone-600 text-xs uppercase tracking-widest mt-0.5">Sede</span> Via Lorenzo Bernini 9,<br>Avola (SR)</li>
+                <li class="flex items-start"><span class="block w-20 text-stone-600 text-xs uppercase tracking-widest mt-0.5">Email</span> <a href="mailto:info@costruzionizuppardo.it" class="hover:text-white transition-colors">info@costruzionizuppardo.it</a></li>
+                <li class="flex items-start"><span class="block w-20 text-stone-600 text-xs uppercase tracking-widest mt-0.5">Tel</span> <a href="tel:+393479260723" class="hover:text-white transition-colors">+39 347 926 0723</a></li>
             </ul>
         </div>
     </div>
-    <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-stone-500 uppercase tracking-widest gap-4 text-center md:text-left">
+
+    <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-stone-600 uppercase tracking-[0.2em] gap-4 text-center md:text-left relative z-10">
         <p>© <span id="copyright-year">2026</span> Zuppardo Costruzioni</p>
-        <p>P.IVA 01960900890 </p>
-        <p>
-            <a href="https://www.iubenda.com/privacy-policy/81016871" class="iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe " title="Privacy Policy ">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
-            <a href="https://www.iubenda.com/privacy-policy/81016871/cookie-policy" class="iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe " title="Cookie Policy ">Cookie Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+        <div class="flex gap-6">
+            <a href="https://www.iubenda.com/privacy-policy/81016871" class="hover:text-stone-400 transition-colors iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe" title="Privacy Policy">Privacy</a>
+            <a href="https://www.iubenda.com/privacy-policy/81016871/cookie-policy" class="hover:text-stone-400 transition-colors iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe" title="Cookie Policy">Cookies</a>
+        </div>
+        <p>P.IVA 01960900890</p>
     </div>
 </footer>
+<script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
